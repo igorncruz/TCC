@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"folder_exclude_patterns":
+			[
+				"Server/__pycache__",
+				"__pycache__"
+			],
+			"path": "."
+		}
+	]
+}
