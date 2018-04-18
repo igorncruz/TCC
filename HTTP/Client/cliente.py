@@ -11,12 +11,16 @@ import http.client, urllib.parse
 
 class Cliente():
 	_dados = Dados()
-	conn = ""
-	def enviarPacote(self):
-		print("enviando pacote")
-		params = urllib.parse.urlencode({'@number': 12524, '@type': 'issue', '@action': 'show'})
-		headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-		self.conn.request("POST", "", params, headers)
+	conn = ''
+	def enviarPacoteTeste(self):
+		print("enviando pacote de testes")
+		headers = {'Content-type': 'application/json'}
+		
+		# conteudoPacote = json.dumps(self._dados.obterAleatorio())
+		conteudoPacote = self._dados.obterAleatorio()
+		
+		self.conn.request("POST", "/markdown", conteudoPacote, headers)
+
 		response = self.conn.getresponse()
 		print(response.status, response.reason)
 
