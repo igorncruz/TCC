@@ -6,7 +6,6 @@ class Dados():
 	"""docstring for Dados"""
 	def __init__(self):
 		super(Dados, self).__init__()
-		print(sys.path)
 		path = sys.path[0] + '/dados.txt'
 		dataFile = open(path, 'r')
 		self.dados = dataFile.readlines()

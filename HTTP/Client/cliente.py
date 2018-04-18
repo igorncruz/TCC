@@ -1,14 +1,17 @@
 #importando a classe de Dados
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path().resolve().parent.parent))
+# Se o cliente for executado no windows, descomentar a linha abaixo
+sys.path.insert(0, str(Path().resolve()))
+# Se o cliente for executado no linux, descomentar a linha abaixo
+# sys.path.insert(0, str(Path().resolve().parent.parent))
+
 from dados import Dados
 import http.client, urllib.parse
 
 class Cliente():
 	_dados = Dados()
 	conn = ""
-	"""docstring for Cliente"""
 	def enviarPacote(self):
 		print("enviando pacote")
 		params = urllib.parse.urlencode({'@number': 12524, '@type': 'issue', '@action': 'show'})
@@ -29,5 +32,5 @@ class Cliente():
 
 
 cliente = Cliente()
-cliente.estabelecerConexao(address='169.254.173.134', port=8080)
-cliente.enviarPacote()
+# cliente.estabelecerConexao(address='169.254.173.134', port=8080)
+# cliente.enviarPacote()
