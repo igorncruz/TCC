@@ -37,4 +37,4 @@ class Cliente():
 
 cliente = Cliente()
 # cliente.estabelecerConexao(address='169.254.173.134', port=8080)
-# cliente.enviarPacote()
+# cliente.enviarPacoteTeste()
