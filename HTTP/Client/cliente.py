@@ -44,6 +44,7 @@ def main():
 		print('o endereço digitado foi: '+ address)
 		cliente.estabelecerConexao(address=address, port=8080)
 	cliente.enviarPacoteTeste()
+	input("Por quanto tempo você deseja enviar pacotes ?")
 
 if __name__ == '__main__':
 	main()

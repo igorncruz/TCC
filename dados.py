@@ -13,6 +13,9 @@ class Dados():
 	def obterAleatorio(self):
 		return self.dados[random.randint(0,len(self.dados))]
 
-if __name__ == '__main__':
+def main():
     d = Dados()
     print(d.obterAleatorio())
+
+if __name__ == '__main__':
+	main()
