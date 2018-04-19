@@ -1,2 +1,5 @@
 
 *.pyc
+.vscode/settings.json
+.vscode/launch.json
+.vscode/.ropeproject/objectdb
