@@ -7,6 +7,7 @@ sys.path.insert(0, str(Path().resolve()))
 # sys.path.insert(0, str(Path().resolve().parent.parent))
 
 from data import Data
+import util
 
 class Client():
 	_dados = Data()
@@ -17,7 +18,6 @@ class Client():
 		print("enviando pacote de testes")
 		headers = {'Content-type': 'application/json'}
 		
-		# conteudoPacote = json.dumps(self._dados.obterAleatorio())
 		packageContent = self._dados.getRandom()
 		
 		self.conn.request("POST", "/markdown", packageContent, headers)
@@ -49,17 +49,21 @@ class Client():
 		
 		self.sendTestPackage()
 
-		self.startExperimentTS = time.time()
-		print("iniciando o experimento às " +
-		      datetime.datetime.fromtimestamp(self.startExperimentTS).strftime('%Y-%m-%d %H:%M:%S'))
+		print("iniciando o experimento às {0}".format(util.getFormattedDatetimeWithMillisec()))
 
-		reps = self._dados.length() if reps <= 0 else reps
+		if (reps <= 0):
+			reps = self._dados.length
+
 		for i in range(0, reps):
-			print("iniciando repetição: "+i)
-			self.sendPackage(i, timePerRep)
+			print("iniciando repetição {} às {}".format(i+1, str(util.getFormattedDatetimeWithMillisec())))
+			self.sendPackage()
+			time.sleep(timePerRep)
 	
-	def sendPackage(self, packageIndex, timePerRep):
-		print(format("Enviando pacote {} e esperando {} segundos", packageIndex, timePerRep))
+	def sendPackage(self):
+		print("Enviando pacote ...")
+		#simulando o envio do pacote
+		time.sleep(0.4)
+		print("Pacote enviado.")
 
 def main():
 	client = Client()
@@ -68,6 +72,8 @@ def main():
 		client.establishConnection(port=8080)
 	else:
 		client.establishConnection(address=address, port=8080)
+	client.startExperiment(reps=10)
+
 
 if __name__ == '__main__':
 	main()
