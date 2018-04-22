@@ -12,6 +12,8 @@ class Data():
 
 	def getRandom(self):
 		return self.data[random.randint(0,len(self.data))]
+	def getByIndex(self, index):
+		return self.data[index]
 	def length(self):
 		return len(self.data)
 
