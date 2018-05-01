@@ -7,11 +7,18 @@ def getFormattedDatetimeWithMillisec(timestamp = ''):
     return datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
 def getFormattedDateTimeFromSeconds(toSeconds, fromTimestamp=''):
-	if (fromTimestamp == ''):
-		fromTimestamp = time.time()
+    if (fromTimestamp == ''):
+        fromTimestamp = time.time()
 
-	toSeconds = toSeconds + fromTimestamp
-	return datetime.datetime.fromtimestamp(toSeconds).strftime('%Y-%m-%d %H:%M:%S')
+    toSeconds = toSeconds + fromTimestamp
+    return datetime.datetime.fromtimestamp(toSeconds).strftime('%Y-%m-%d %H:%M:%S')
+
+
+def addSecs(tms, secs):
+    fulldate = datetime.datetime.fromtimestamp(tms)
+    # datetime.timedelta(0, self.__maxTimeInSecBetweenPackages)
+    fulldate = fulldate + datetime.timedelta(seconds=secs)
+    return fulldate
 
 
 def main():

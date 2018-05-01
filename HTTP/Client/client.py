@@ -2,12 +2,14 @@
 import sys, http.client, time, datetime
 from pathlib import Path
 # Se o cliente for executado no windows, descomentar a linha abaixo
-sys.path.insert(0, str(Path().resolve()))
+# sys.path.insert(0, str(Path().resolve()))
 # Se o cliente for executado no linux, descomentar a linha abaixo
-# sys.path.insert(0, str(Path().resolve().parent.parent))
+sys.path.insert(0, str(Path().resolve().parent.parent))
 
 from data import Data
 import util
+
+TAB_1 = '\t - '
 
 class Client():
     _dados = Data()
@@ -16,7 +18,10 @@ class Client():
 
     def sendTestPackage(self):
         print("\nenviando pacote de testes")
-        headers = {'Content-type': 'application/json'}
+        # print("Timestamp:" + str(time.time()))
+        headers = {
+            'Content-type': 'application/json',
+        }
 
         packageContent = self._dados.getRandom()
 
@@ -47,7 +52,7 @@ class Client():
 				Padrão = 1seg
 		"""
 
-        self.sendTestPackage()
+        # self.sendTestPackage()
 
         print("\nIniciando o experimento às {0}".format(util.getFormattedDatetimeWithMillisec()))
 
@@ -55,7 +60,7 @@ class Client():
             reps = self._dados.length()
         print("Quantidade de pacotes que serão enviados: {}".format(reps))
         duracao = timePerRep * reps
-        print("Tempo estimado de duração do experimento: {} ({})".format(
+        print("Tempo estimado de duração do experimento: {} ({})\n".format(
             util.getFormattedDateTimeFromSeconds(duracao),
             str(datetime.timedelta(seconds=duracao))))
 
@@ -65,13 +70,15 @@ class Client():
             time.sleep(timePerRep)
 
     def sendPackage(self, index):
-        print("Enviando pacote ...")
+        print(TAB_1 + "Enviando pacote ...")
         dados = self._dados.getByIndex(index)
 
-        headers = {'Content-type': 'application/json'}
+        headers = {'Content-type': 'application/json',
+            'X-Timestamp': str(time.time()),
+        }
         self.conn.request("POST", "/markdown", dados, headers)
         response = self.conn.getresponse()
-        print("Pacote enviado - {}  {}".format(response.status, response.reason))
+        print(TAB_1 + "Pacote enviado: {}  {}".format(response.status, response.reason))
 
 def main():
     client = Client()
@@ -81,7 +88,7 @@ def main():
     else:
         client.establishConnection(address=address, port=8080)
 
-    reps = input('Digite a quantidade de pacotes que você deseja enviar: (ou deixe em branco para enviar a quantidade máxima possível )\n')
+    reps = input('\nDigite a quantidade de pacotes que você deseja enviar: (ou deixe em branco para enviar a quantidade máxima possível )\n')
 
     try:
         reps = int(reps)

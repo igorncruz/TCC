@@ -11,38 +11,44 @@ Send a POST request::
     curl -d "foo=bar&bin=baz" http://localhost
 """
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import socketserver
+import socketserver, time, datetime
 
-class S(BaseHTTPRequestHandler):
+class Server(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
-        self.send_header('Content-type', 'text/html')
+        self.send_header('Content-type', 'text')
         self.end_headers()
-
-    def do_GET(self):
-        self._set_headers()
-        self.wfile.write("<html><body><h1>hi!</h1></body></html>")
 
     def do_HEAD(self):
         self._set_headers()
-        
+
     def do_POST(self):
-        # Doesn't do anything with posted data
-        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
         print("HEADERS: ")
+        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
         print(self)
         post_data = self.rfile.read(content_length) # <--- Gets the data itself
         print(post_data) # <-- Print post data
         self._set_headers()
-        
-def run(server_class=HTTPServer, handler_class=S, port=8080):
+
+def run(server_class=HTTPServer, handler_class=Server, port=8080):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
-    print('Starting httpd...')
+
+    #Se estiver executando em localhost, usar o codigo abaixo pra obter o IP
+    ip = ni.ifaddresses('wlp3s0')[ni.AF_INET][0]['addr']
+    # print("meu ip em wlp3s0 é: {}".format(ip))
+    #Se estiver executando em rede, usar o codigo abaixo pra obter o IP
+    # ip = ni.ifaddresses('enp9s0')[ni.AF_INET][0]['addr']
+    # print("meu ip em enp9s0 é: {}".format(ip))
+
+    print('Iniciando servidor HTTP em {}:{}...\n'.format(ip, port))
     httpd.serve_forever()
 
 if __name__ == "__main__":
     from sys import argv
+    import netifaces as ni
+    print(ni.interfaces())
+
 
     if len(argv) == 2:
         run(port=int(argv[1]))
