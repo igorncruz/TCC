@@ -1,0 +1,135 @@
+#!/bin/sh
+#
+# Script to reduce bandwidth rate and create network delay and packet loss on linux interfaces
+# Can be placed on one interface (one server) or both interfaces (both servers).
+#
+# Simply run ./tc-con start to start it
+# and ./tc-con stop to stop it.
+# Run ./tc-con status to see if it's running.
+#
+#  tc uses the following units when passed as a parameter.
+#  kbps: Kilobytes per second
+#  mbps: Megabytes per second
+#  kbit: Kilobits per second
+#  mbit: Megabits per second
+#  bps: Bytes per second
+#       Amounts of data can be specified in:
+#       kb or k: Kilobytes
+#       mb or m: Megabytes
+#       mbit: Megabits
+#       kbit: Kilobits
+#
+# Originally from iplocation.net/traffic-control
+# Further information at http://www.linuxfoundation.org/collaborate/workgroups/networking/netem
+# Updated by Jon Drews (jondrews.com)
+
+# Name of the traffic control command.
+TC=/sbin/tc
+
+# The network interface we're planning on limiting bandwidth.
+IF=eth0
+
+# Rate (both ways)
+RATE=100kbit
+
+# Delay amount
+DELAY=250ms
+
+# Amount of delay variance (+/-)
+DELAY_VARIANCE=50ms
+
+# Packet loss amount
+PACKET_LOSS=10%
+
+# Packet loss variance
+PACKET_LOSS_VARIANCE=5%
+
+# Enable packet loss
+#PACKET_LOSS_ENABLED=TRUE
+PACKET_LOSS_ENABLED=FALSE
+
+start() {
+
+    # Apply rate limits
+    $TC qdisc add dev $IF root handle 1: tbf rate $RATE buffer 1600 limit 3000
+
+    if [[ $PACKET_LOSS_ENABLED != TRUE ]]
+    then
+        # Apply delay with variance, and packet loss
+        $TC qdisc add dev $IF parent 1:1 handle 10: netem delay $DELAY $DELAY_VARIANCE distribution normal
+    else
+        # Apply delay with variance, and packet loss with variance
+        $TC qdisc add dev $IF parent 1:1 handle 10: netem delay $DELAY $DELAY_VARIANCE distribution normal loss $PACKET_LOSS $PACKET_LOSS_VARIANCE
+    fi
+
+}
+
+stop() {
+
+# Stop the bandwidth shaping.
+    $TC qdisc del dev $IF root
+
+}
+
+restart() {
+
+# Self-explanatory.
+    stop
+    sleep 1
+    start
+
+}
+
+show() {
+
+# Display status of traffic control status.
+    $TC -s qdisc ls dev $IF
+
+}
+
+case "$1" in
+
+  start)
+
+    echo -n "Starting bandwidth shaping: "
+    start
+    echo "done"
+    ;;
+
+  stop)
+
+    echo -n "Stopping bandwidth shaping: "
+    stop
+    echo "done"
+    ;;
+
+  restart)
+
+    echo -n "Restarting bandwidth shaping: "
+    restart
+    echo "done"
+    ;;
+
+  show)
+
+    echo "Bandwidth shaping status for $IF:"
+    show
+    echo ""
+    ;;
+
+  status)
+
+    echo "Bandwidth shaping status for $IF:"
+    show
+    echo ""
+    ;;
+
+  *)
+
+    pwd=$(pwd)
+    echo "Usage: tc.bash {start|stop|restart|show|status}"
+    ;;
+
+esac
+
+exit 0
