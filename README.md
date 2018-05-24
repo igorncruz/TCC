@@ -48,11 +48,11 @@ TEM QUE FAZER ISSO
 Para realizar a captura de pacotes entre o cliente e o servidor foi utilizado o TCPDump.
 
 Para capturar e salvar os pacotes transmitidos via TCP ou UDP foi utilizado o código abaixo rodando direto no terminal
-** TCP **
+**TCP**
 ```
 TEM QUE FAZER ISSO
 ```
-** UDP **
+**UDP**
 ```
 TEM QUE FAZER ISSO
 ```
