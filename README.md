@@ -36,6 +36,22 @@ A realização do experimento envolveu 4 etapas básicas:
 ### Configurações do ambiente
 Neste trabalho foi utilizado um notebook Thinkpad rodando Ubuntu 16.04, uma placa Raspberry Pi (RPi) modelo 3B rodando Raspbian veroa XXXXX, e um switch de 4 portas da Multilaser para conectar o notebook com a placa e 2 cabos ethernet comuns de 1,5m cada
 
+### Implementação dos protocolos
+
+#### STOMP
+Para realizar a comunicação no protocolo STOMP foi utilizado o (RabbitMQ)[https://tecadmin.net/install-rabbitmq-server-on-ubuntu/] como broker com o plugin do (STOMP)[http://www.rabbitmq.com/stomp.html] e como cliente foi utilizado a biblioteca (stomp.py)[https://github.com/jasonrbriggs/stomp.py] 
+
+Após a instalação do RabbitMQ pelo link acima, para iniciar/obter status/parar serviço são utilizados os comandos
+```
+$ sudo service rabbitmq-server start
+$ sudo service rabbitmq-server status
+$ sudo service rabbitmq-server stop
+```
+
+Após startar o serviço, acessar http://localhost:15672 com login: guest/guest
+
+
+
 ### Simulando a rede
 Para simular a rede de baixa qualidade foi utilizado [este script](network-emulation/tc-con) rodado direto no terminal da placa RPi.
 
@@ -48,10 +64,12 @@ TEM QUE FAZER ISSO
 Para realizar a captura de pacotes entre o cliente e o servidor foi utilizado o TCPDump.
 
 Para capturar e salvar os pacotes transmitidos via TCP ou UDP foi utilizado o código abaixo rodando direto no terminal
+
 **TCP**
 ```
 TEM QUE FAZER ISSO
 ```
+
 **UDP**
 ```
 TEM QUE FAZER ISSO
