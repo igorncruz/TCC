@@ -50,6 +50,10 @@ $ sudo service rabbitmq-server stop
 
 Após startar o serviço, acessar http://localhost:15672 com login: guest/guest
 
+#### AMQP
+Como o protocolo AMQP utiliza a arquitetura pub-sub, foi possível reutilizar o RabbitMQ como broker do mesmo modo que o STOMP. Naturalmente por serem protocolos diferentes, utilizam portas diferente e bibliotecas diferentes.
+
+A biblioteca utilizada como cliente foi a [Pika](https://github.com/pika/pika) (um tutorial bem simples de ser entendido pode ser encontrando no próprio site do RabbitMQ [aqui](https://www.rabbitmq.com/tutorials/tutorial-one-python.html) )
 
 
 ### Simulando a rede
