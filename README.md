@@ -39,7 +39,7 @@ Neste trabalho foi utilizado um notebook Thinkpad rodando Ubuntu 16.04, uma plac
 ### Implementação dos protocolos
 
 #### STOMP
-Para realizar a comunicação no protocolo STOMP foi utilizado o (RabbitMQ)[https://tecadmin.net/install-rabbitmq-server-on-ubuntu/] como broker com o plugin do (STOMP)[http://www.rabbitmq.com/stomp.html] e como cliente foi utilizado a biblioteca (stomp.py)[https://github.com/jasonrbriggs/stomp.py] 
+Para realizar a comunicação no protocolo STOMP foi utilizado o [RabbitMQ[](https://tecadmin.net/install-rabbitmq-server-on-ubuntu/) como broker com o plugin do [STOMP](http://www.rabbitmq.com/stomp.html) e como cliente foi utilizado a biblioteca [stomp.py](https://github.com/jasonrbriggs/stomp.py)
 
 Após a instalação do RabbitMQ pelo link acima, para iniciar/obter status/parar serviço são utilizados os comandos
 ```
