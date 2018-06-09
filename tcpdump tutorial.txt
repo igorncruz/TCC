@@ -14,4 +14,4 @@ dst port 8080 -> Na porta de destino 8080
 
 
 
-sudo tcpdump -w http.pcap -i wlp3s0 tcp dst 50.116.66.139 dport 8080
+sudo tcpdump -w http_factor_3_3_3_server.pcap -i enp9s0 tcp dst 10.42.0.1 dport 8080

@@ -89,3 +89,16 @@ Documentação:
 - Continuar a escrever sobre os protocolos (finalizar o CoAP e o MQTT)
 DEADLINE: 25/04 (mandar no email anterior como está o andamento da escrita do trabalho)
 
+================================================================================================================
+Reunião dia 19/04 - 08h
+
+justificar o não uso do DDS (ver em outros trabalhos como o DDS é utilizado e se é utilizado para comunicação entre dispositivos em IoT)
+
+ANALISE DOS DADOS
+Cada repetição (5 min)
+
+Atraso
+>> Calcular a média dos atrasos do pacotes 
+
+Taxa de perda
+>> Somar a quantidade de pacotes / tempo 

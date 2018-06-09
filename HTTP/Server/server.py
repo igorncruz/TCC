@@ -50,11 +50,11 @@ def run(server_class=HTTPServer, handler_class=Server, port=8080):
     httpd = server_class(server_address, handler_class)
 
     #Se estiver executando em localhost, usar o codigo abaixo pra obter o IP
-    ip = ni.ifaddresses('wlp3s0')[ni.AF_INET][0]['addr']
+    # ip = ni.ifaddresses('wlp3s0')[ni.AF_INET][0]['addr']
     # print("meu ip em wlp3s0 é: {}".format(ip))
     #Se estiver executando em rede, usar o codigo abaixo pra obter o IP
-    # ip = ni.ifaddresses('enp9s0')[ni.AF_INET][0]['addr']
-    # print("meu ip em enp9s0 é: {}".format(ip))
+    ip = ni.ifaddresses('enp9s0')[ni.AF_INET][0]['addr']
+    print("meu ip em enp9s0 é: {}".format(ip))
 
     print('Iniciando servidor HTTP em {}:{}...\n'.format(ip, port))
     httpd.serve_forever()
