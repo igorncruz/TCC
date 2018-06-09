@@ -59,10 +59,51 @@ A biblioteca utilizada como cliente foi a [Pika](https://github.com/pika/pika) (
 ### Simulando a rede
 Para simular a rede de baixa qualidade foi utilizado [este script](network-emulation/tc-con) rodado direto no terminal da placa RPi.
 
-Para rodar o script
+Para rodar o script é necessário entrar na pasta onde ele se encontra (neste caso a 'network-emulation') e rodar os scripts abaixo. O script aceita os comandos `start`, `show`, `restart`, `stop` e `status`
 ```
-TEM QUE FAZER ISSO
+$ sudo ./tc-con start
+$ sudo ./tc-con show
+$ sudo ./tc-con restart
+$ sudo ./tc-con stop
+$ sudo ./tc-con status
 ```
+
+Para alterar os parâmetros utilizados no experimento, abrir o arquivo do script num editor de texto qualquer e alterar os valores de:
+- `RATE` para Limite de banda
+- `DELAY` para o atraso no envio dos pacotes
+- `PACKET_LOSS` para Taxa de perda de pacotes
+
+##### Checar a simulação da rede
+
+Como o envio de pacotes durante o experimento consome muito pouca banda, foi necessário verificar que a simulação da rede estava de fato funcionando. Para isso foi utilizado o iperf. Foram executados os comandos abaixo antes e após o início da simulação da rede.
+
+**Testar Conexão TCP**
+
+*Máquina Servidor (notebook) *
+```
+$ iperf -s
+```
+
+*Máquina Cliente (Raspeberry Pi)*
+```
+$ iperf -c [IP_DA_MAQUINA_DESTINO]
+```
+
+**Testar Conexão UDP**
+
+*Máquina Servidor (notebook) *
+```
+$ iperf -s -u
+```
+
+*Máquina Cliente (Raspeberry Pi)*
+```
+$ iperf -c [IP_DA_MAQUINA_DESTINO] -u -b 10M
+```
+
+
+obs: é necessário primeiro rodar o comando do Servidor para depois rodar o comando do Cliente
+
 
 ### Captura de pacotes
 Para realizar a captura de pacotes entre o cliente e o servidor foi utilizado o TCPDump.
