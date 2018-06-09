@@ -1,10 +1,14 @@
+"""
+Class for python2
+"""
+
 import random
 import sys
 
-class Data():
+class Data:
 	"""docstring for Dados"""
 	def __init__(self):
-		super(Data, self).__init__()
+		
 		path = sys.path[0] + '/dados.txt'
 		dataFile = open(path, 'r')
 		self.data = dataFile.readlines()

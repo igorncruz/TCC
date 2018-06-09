@@ -1,0 +1,17 @@
+Comando TCPDUMP
+fontes:
+https://www.rationallyparanoid.com/articles/tcpdump.html
+https://www.tecmint.com/12-tcpdump-commands-a-network-sniffer-tool/
+
+sudo tcpdump -> Capture os pacotes
+-w http.pcap -> Escreva no arquivo http.pcap 
+-i wlp3s0 -> da interface slp3s0 (para ver as interfaces e ip's disponíveis é só rodar 'ifconfig')
+-i any -> de qualquer interface
+tcp -> Capture todos os pacotes do tipo TCP
+dst 50.116.66.139 -> Cujo destino dos pacotes seja o endereço 50.116.66.139
+src 192.168.0.2 -> Cuja origem dos pacotes seja o endereço 192.168.0.2
+dst port 8080 -> Na porta de destino 8080
+
+
+
+sudo tcpdump -w http.pcap -i wlp3s0 tcp dst 50.116.66.139 dport 8080

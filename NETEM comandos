@@ -1,0 +1,10 @@
+NETEM Comandos
+
+# Para adicionar latência de 1 segundo na rede 
+sudo tc qdisc add dev wlp3s0 root netem delay 1000ms
+
+#Para remover delay
+sudo tc qdisc del dev wlp3s0 root
+
+#Limite de banda, delay e perda de pacotes 
+sudo tc qdisc change dev eth0 root handle 1:0 netem delay 100ms loss 0.8% rate imbit limit 1000

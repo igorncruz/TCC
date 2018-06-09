@@ -78,7 +78,7 @@ PROXIMAS ATIVIDADES
 Mão na massa: 
 - Conectar a placa com o Ubuntu
 - Enviar dados em sequencia (de 1 em 1 segundo)
-- Fazer a captura de pacotes com o TCPDump e o libpcap
+- Fazer a captura de pacotes com o TCPDump e o libpcap e pycap
 - Simular rede de baixa qualidade com NETEM (e testar se a rede está mesmo com baixa qualidade com o iperf)
 DEADLINE: 25/04 (mandar email com report de como está o andamento das coisas e se precisa ou não de reunião no dia 26/04)
 

@@ -1,10 +1,10 @@
 #importando a classe de Dados
 import sys, http.client, time, datetime
 from pathlib import Path
-# Se o cliente for executado no windows, descomentar a linha abaixo
-# sys.path.insert(0, str(Path().resolve()))
+# Se o cliente for executado no windows ou Visual Code, descomentar a linha abaixo
+sys.path.insert(0, str(Path().resolve()))
 # Se o cliente for executado no linux, descomentar a linha abaixo
-sys.path.insert(0, str(Path().resolve().parent.parent))
+# sys.path.insert(0, str(Path().resolve().parent.parent))
 
 from data import Data
 import util
