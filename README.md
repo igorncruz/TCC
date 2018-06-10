@@ -106,16 +106,29 @@ obs: é necessário primeiro rodar o comando do Servidor para depois rodar o com
 
 
 ### Captura de pacotes
-Para realizar a captura de pacotes entre o cliente e o servidor foi utilizado o TCPDump.
+Para realizar a captura de pacotes tanto no cliente quanto no servidor foi utilizado o [TCPDump](http://www.ronnutter.com/raspberry-pi-intro-to-tcpdump/).
 
-Para capturar e salvar os pacotes transmitidos via TCP ou UDP foi utilizado o código abaixo rodando direto no terminal
+Para capturar e salvar os pacotes transmitidos via TCP ou UDP foi utilizado os comandos abaixo. Um tutorial sobre os comandos disponíveis para o TCPDump pode ser visto [aqui](https://www.tecmint.com/12-tcpdump-commands-a-network-sniffer-tool/) e [aqui](https://danielmiessler.com/study/tcpdump/)
+
+Ao salvar o nome do arquivo foi utilizado a nomeclatura [NOME_DO_PROTOCOLO]\_factor_\[NIVEL_FATOR_UM]\_\[NIVEL_FATOR_DOIS]\_\[NIVEL_FATOR_TRES]\_\[server | client].pcap
+Ex: http_factor_3_3_3_server.pcap
 
 **TCP**
 ```
-TEM QUE FAZER ISSO
+$ sudo tcpdump -w teste.pcap -i enp9s0 tcp and dst 10.42.0.1 and port 8080
 ```
-
 **UDP**
 ```
 TEM QUE FAZER ISSO
 ```
+
+onde:
+- `sudo tcpdump`: comando para iniciar o tcpdump;
+- `-w teste.pcap`: gravar os pacotes capturados no arquivo com o nome "teste" e a extensão `.pcap`;
+- `-i enp9s0`: escutar apenas os pacotes que passam pela interface "enp9s0". Para ver todas as interfaces disponíveis no dispositivo, rodar o comando ```$ sudo tcpdump -D```;
+- `tcp` | `udp`: capturar apenas os pacotes cujo protocolo seja tcp ou udp;
+- `dst 10.42.0.1`: capturar apenas os pacotes cujo destino seja o endereço de ip informado;
+- `port`: capturar apenas os pacotes que passem pela porta informada;
+
+
+
