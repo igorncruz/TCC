@@ -1,5 +1,5 @@
 import pcap, dpkt, socket, datetime, sys, http
-# from pathlib import Path
+from pathlib import Path
 # Se o cliente for executado no windows ou Visual Code, descomentar a linha abaixo
 # sys.path.insert(0, str(Path().resolve()))
 # Se o cliente for executado no linux, descomentar a linha abaixo
@@ -38,20 +38,22 @@ class PktData():
             pass
 
     def toString (self):
-        return '{}, {}, {}: {}:{} -> {}:{} - {}'.format(self.pktId, self.ts, self.len, self.srcAddress, self.srcPort, self.destAddress, self.destPort, self.data)
+        return '{}, {}, {}, {} >>> {}:{} -> {}:{}'.format(
+            self.pktId, self.ts, self.len, len(self.data), self.srcAddress,
+            self.srcPort, self.destAddress, self.destPort)
 
 maxPkts = 1000
 nPkts = 0
 
-path = 'teste.txt'
+path = 'teste2.txt'
 file = open(path, 'w')
-for ts, pkt in pcap.pcap("teste1.pcap"):
+for ts, pkt in pcap.pcap("http/http_factor_3_3_3_client.pcap"):
     nPkts += 1
 
     pkt = PktData(ts, pkt)
     file.write(pkt.toString())
     file.write("\n")
 
-    if (nPkts == maxPkts):
-        file.close()
-        break
+# if (nPkts >= maxPkts):
+file.close()
+# break
