@@ -115,7 +115,7 @@ Ex: http_factor_3_3_3_server.pcap
 
 **TCP**
 ```
-sudo tcpdump -w teste.pcap -i enp9s0 tcp and dst 10.42.0.1 and port 8080
+$ sudo tcpdump -w teste.pcap -i enp9s0 tcp and dst 10.42.0.1 and port 8080
 ```
 **UDP**
 ```
@@ -125,7 +125,7 @@ TEM QUE FAZER ISSO
 onde:
 - `sudo tcpdump`: comando para iniciar o tcpdump;
 - `-w teste.pcap`: gravar os pacotes capturados no arquivo com o nome "teste" e a extensão `.pcap`;
-- `-i enp9s0`: escutar apenas os pacotes que passam pela interface "enp9s0". Para ver todas as interfaces disponíveis no dispositivo, rodar o código ```$ sudo tcpdump -D```;
+- `-i enp9s0`: escutar apenas os pacotes que passam pela interface "enp9s0". Para ver todas as interfaces disponíveis no dispositivo, rodar o comando ```$ sudo tcpdump -D```;
 - `tcp` | `udp`: capturar apenas os pacotes cujo protocolo seja tcp ou udp;
 - `dst 10.42.0.1`: capturar apenas os pacotes cujo destino seja o endereço de ip informado;
 - `port`: capturar apenas os pacotes que passem pela porta informada;
