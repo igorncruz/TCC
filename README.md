@@ -25,38 +25,18 @@ O trabalho foi estruturado da seguinte forma: Cada protocolo analisado tem a sua
 ## O Experimento
 A realização do experimento envolveu 4 etapas básicas:
 1. Configuração do ambiente;
-2. Implementação da comunicação entre clientes e servidores de aplicação para cada protocolo (utilizando API's);
-3. Simulação de uma rede de baixa qualidade
+2. Simulação de uma rede de baixa qualidade
    - Alta latência;
    - Alta taxa de perda de pacotes;
    - Baixa banda;
-4. Captura dos pacotes enviados entre o cliente e o servidor de cada protocolo;
+3. Captura dos pacotes enviados entre o cliente e o servidor de cada protocolo;
+4. Implementação da comunicação entre clientes e servidores de aplicação para cada protocolo (utilizando API's);
 
 
-### Configurações do ambiente
+### 1. Configurações do ambiente
 Neste trabalho foi utilizado um notebook Thinkpad rodando Ubuntu 16.04, uma placa Raspberry Pi (RPi) modelo 3B rodando Raspbian veroa XXXXX, e um switch de 4 portas da Multilaser para conectar o notebook com a placa e 2 cabos ethernet comuns de 1,5m cada
 
-### Implementação dos protocolos
-
-#### STOMP
-Para realizar a comunicação no protocolo STOMP foi utilizado o [RabbitMQ](https://tecadmin.net/install-rabbitmq-server-on-ubuntu/) como broker com o plugin do [STOMP](http://www.rabbitmq.com/stomp.html) e como cliente foi utilizado a biblioteca [stomp.py](https://github.com/jasonrbriggs/stomp.py)
-
-Após a instalação do RabbitMQ pelo link acima, para iniciar/obter status/parar serviço são utilizados os comandos
-```
-$ sudo service rabbitmq-server start
-$ sudo service rabbitmq-server status
-$ sudo service rabbitmq-server stop
-```
-
-Após startar o serviço, acessar http://localhost:15672 com login: guest/guest
-
-#### AMQP
-Como o protocolo AMQP utiliza a arquitetura pub-sub, foi possível reutilizar o RabbitMQ como broker do mesmo modo que o STOMP. Naturalmente por serem protocolos diferentes, utilizam portas diferente e bibliotecas diferentes.
-
-A biblioteca utilizada como cliente foi a [Pika](https://github.com/pika/pika) (um tutorial bem simples de ser entendido pode ser encontrando no próprio site do RabbitMQ [aqui](https://www.rabbitmq.com/tutorials/tutorial-one-python.html) )
-
-
-### Simulando a rede
+### 2. Simulando a rede
 Para simular a rede de baixa qualidade foi utilizado [este script](network-emulation/tc-con) rodado direto no terminal da placa RPi.
 
 Para rodar o script é necessário entrar na pasta onde ele se encontra (neste caso a 'network-emulation') e rodar os scripts abaixo. O script aceita os comandos `start`, `show`, `restart`, `stop` e `status`
@@ -105,7 +85,7 @@ $ iperf -c [IP_DA_MAQUINA_DESTINO] -u -b 10M
 obs: é necessário primeiro rodar o comando do Servidor para depois rodar o comando do Cliente
 
 
-### Captura de pacotes
+### 3. Captura de pacotes
 Para realizar a captura de pacotes tanto no cliente quanto no servidor foi utilizado o [TCPDump](http://www.ronnutter.com/raspberry-pi-intro-to-tcpdump/).
 
 Para capturar e salvar os pacotes transmitidos via TCP ou UDP foi utilizado os comandos abaixo. Um tutorial sobre os comandos disponíveis para o TCPDump pode ser visto [aqui](https://www.tecmint.com/12-tcpdump-commands-a-network-sniffer-tool/) e [aqui](https://danielmiessler.com/study/tcpdump/)
@@ -130,5 +110,45 @@ onde:
 - `dst 10.42.0.1`: capturar apenas os pacotes cujo destino seja o endereço de ip informado;
 - `port`: capturar apenas os pacotes que passem pela porta informada;
 
+
+
+
+### 4. Implementação dos protocolos
+
+#### STOMP
+Para realizar a comunicação no protocolo STOMP foi utilizado o [RabbitMQ](https://tecadmin.net/install-rabbitmq-server-on-ubuntu/) como broker com o plugin do [STOMP](http://www.rabbitmq.com/stomp.html) e como cliente foi utilizado a biblioteca [stomp.py](https://github.com/jasonrbriggs/stomp.py)
+
+Após a instalação do RabbitMQ pelo link acima, para iniciar/obter status/parar serviço são utilizados os comandos
+```
+$ sudo service rabbitmq-server start
+$ sudo service rabbitmq-server status
+$ sudo service rabbitmq-server stop
+```
+
+Após startar o serviço, acessar http://localhost:15672 com login: guest/guest
+
+#### AMQP
+Como o protocolo AMQP utiliza a arquitetura pub-sub, foi possível reutilizar o RabbitMQ como broker do mesmo modo que o STOMP. Naturalmente por serem protocolos diferentes, utilizam portas diferente e bibliotecas diferentes.
+
+A biblioteca utilizada como cliente foi a [Pika](https://github.com/pika/pika) (um tutorial bem simples de ser entendido pode ser encontrando no próprio site do RabbitMQ [aqui](https://www.rabbitmq.com/tutorials/tutorial-one-python.html) )
+
+
+## Análise dos dados
+
+### Análise dos pacotes
+
+### Análise das repetições
+
+Para realizar a análise das métricas obtidas na análise das repetições, foi utilizado a linguagem R e a ferramenta [R Stúdio](https://www.rstudio.com/) 
+
+Para instalar o R foi necessário executar apenas os 2 comandos abaixo
+```
+$ sudo apt-get update
+$ sudo apt-get install r-base
+```
+
+Já pra instalar o RStudio foi só baixar na parte de download pelo site no link acima o arquivo .deb
+
+[AQUI](https://www.youtube.com/watch?v=AwMct_RzGGE) tem ótimas video aulas/tutoriais em PT-BR de como mexer com o RStudio, como importar dados CSV, gerar gráficos, realizar análises, entre outros.
 
 
