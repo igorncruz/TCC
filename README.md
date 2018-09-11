@@ -36,6 +36,17 @@ A realização do experimento envolveu 4 etapas básicas:
 ### 1. Configurações do ambiente
 Neste trabalho foi utilizado um notebook Thinkpad rodando Ubuntu 16.04, uma placa Raspberry Pi (RPi) modelo 3B rodando Raspbian veroa XXXXX, e um switch de 4 portas da Multilaser para conectar o notebook com a placa e 2 cabos ethernet comuns de 1,5m cada
 
+#### Configurando NTP
+Para tentar eliminar ao máximo os fatores externos do experimento, antes de executá-lo foi necessário que os relógios tanto da rasp quanto do notebook estivessem sincronizados. Para isso foi utilizado o ntpdate, instalado via comando abaixo
+```
+$ sudo apt install ntpdate
+```
+
+Para sincronizar os relógios foi utilizado o comandos abaixo tanto na rPi quanto no notebook até que ambos obtivessem um offset abaixo e 0.00...
+```
+$ sudo ntpdate a.ntp.br
+```
+
 ### 2. Simulando a rede
 Para simular a rede de baixa qualidade foi utilizado [este script](network-emulation/tc-con) rodado direto no terminal da placa RPi.
 
