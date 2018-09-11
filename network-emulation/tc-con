@@ -30,18 +30,19 @@ TC=/sbin/tc
 IF=eth0
 
 # Rate (both ways)
-RATE=250kbit
-#RATE=56kbit
-#RATE=5.6kbit
+RATE=21kbit
+#RATE=14kbit
+#RATE=7kbit
 
 # Delay amount
-DELAY=0ms
+DELAY=10ms
 #DELAY=100ms
-#DELAY=250ms
+#DELAY=400ms
 
 # Amount of delay variance (+/-)
-#DELAY_VARIANCE=50ms
-DELAY_VARIANCE=0ms
+DELAY_VARIANCE=2ms
+#DELAY_VARIANCE=20ms
+#DELAY_VARIANCE=80ms
 
 # Packet loss amount
 PACKET_LOSS=0%
@@ -50,7 +51,7 @@ PACKET_LOSS=0%
 
 # Packet loss variance
 #PACKET_LOSS_VARIANCE=5%
-PACKET_LOSS_VARIANCE=0%
+#PACKET_LOSS_VARIANCE=0%
 
 # Enable packet loss
 #PACKET_LOSS_ENABLED=TRUE
@@ -67,7 +68,7 @@ start() {
         $TC qdisc add dev $IF parent 1:1 handle 10: netem delay $DELAY $DELAY_VARIANCE distribution normal
     else
         # Apply delay with variance, and packet loss with variance
-        $TC qdisc add dev $IF parent 1:1 handle 10: netem delay $DELAY $DELAY_VARIANCE distribution normal loss $PACKET_LOSS $PACKET_LOSS_VARIANCE
+        $TC qdisc add dev $IF parent 1:1 handle 10: netem delay $DELAY $DELAY_VARIANCE distribution normal loss $PACKET_LOSS #$PACKET_LOSS_VARIANCE
     fi
 
 }

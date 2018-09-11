@@ -14,6 +14,7 @@ def getFormattedDateTimeFromSeconds(toSeconds, fromTimestamp=''):
     return datetime.datetime.fromtimestamp(toSeconds).strftime('%Y-%m-%d %H:%M:%S')
 
 
+
 def addSecs(tms, secs):
     fulldate = datetime.datetime.fromtimestamp(tms)
     # datetime.timedelta(0, self.__maxTimeInSecBetweenPackages)
@@ -22,8 +23,10 @@ def addSecs(tms, secs):
 
 
 def main():
-    a = getFormattedDateTimeFromSeconds(60)
+    a = addSecs(time.time(), 300 )
+    b = addSecs(a.timestamp(), 300)
     print(a)
+    print(b)
 
 if __name__ == '__main__':
     main()
