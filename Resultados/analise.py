@@ -122,14 +122,13 @@ class Repetition():
 
 
 class Analyze():
-    secondsForEachRep = 60 #Cada repetição dura 5 min
+    secondsForEachRep = 60 #Cada repetição dura 1 min
     def __init__(self, pcapFileFromServer, pcapFileFromClient, outputFileName):
         self.outputFileName = outputFileName
         self.pcapFileFromClient = pcapFileFromClient
         self.pcapFileFromServer = pcapFileFromServer
         self.listPackageServer = self.__extractPackages__(self.pcapFileFromServer)
         self.listPackageClient = self.__extractPackages__(self.pcapFileFromClient)
-        # self.findPairPackages()
         self.generateReps()
 
     def __extractPackages__(self, pcapFile):
@@ -216,8 +215,8 @@ class Analyze():
 
 
 def main():
-    analise = Analyze('http/http_factor_3_3_3_server.pcap',
-               'http/http_factor_3_3_3_client.pcap', 'http/http_factor_3_3_3_result_1min')
+    analise = Analyze('http/notebook/http_factor_3_3_3_server.pcap',
+               'http/rPi/http_factor_3_3_3_client.pcap', 'http/http_factor_3_3_3_result')
     analise.generateFile()
 
 if __name__ == '__main__':
