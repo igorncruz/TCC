@@ -37,15 +37,72 @@ A realização do experimento envolveu 4 etapas básicas:
 Neste trabalho foi utilizado um notebook Thinkpad rodando Ubuntu 16.04, uma placa Raspberry Pi (RPi) modelo 3B rodando Raspbian veroa XXXXX, e um switch de 4 portas da Multilaser para conectar o notebook com a placa e 2 cabos ethernet comuns de 1,5m cada
 
 #### Configurando NTP
-Para tentar eliminar ao máximo os fatores externos do experimento, antes de executá-lo foi necessário que os relógios tanto da rasp quanto do notebook estivessem sincronizados. Para isso foi utilizado o ntpdate, instalado via comando abaixo
+Para tentar eliminar ao máximo os fatores externos do experimento, antes de executá-lo foi necessário que os relógios tanto da rasp quanto do notebook estivessem sincronizados ao máximo. Para isso foi utilizado o ntp e ntpdate, instalado tanto na Rasp quanto no notebook via comando abaixo
 ```
+$ sudo apt install ntp
 $ sudo apt install ntpdate
 ```
 
-Para sincronizar os relógios foi utilizado o comandos abaixo tanto na rPi quanto no notebook até que ambos obtivessem um offset abaixo e 0.00...
+Visando a melhor forma de realizar o experimento, resolveu-se utilizar o notebook como servidor ntp e a Rasp como client ntp para que a data/hora ficasse o mais sincronizado possível. Sendo assim, para configurar o notebook como servidor foi necessário executar [alguns passos](https://www.thegeekstuff.com/2014/06/linux-ntp-server-client/).
+
+1. Editar o arquivo /etc/ntp.conf no Notebook
+Foi incluida as seguintes linhas abaixo para que o notebook funcione como servidor ntp
 ```
-$ sudo ntpdate a.ntp.br
+restrict default kod nomodify notrap nopeer noquery #allows other clients to query your time server
+restrict -6 default kod nomodify notrap nopeer noquery #The value -6 allows forces the DNS resolution to the IPV6 address resolution
+#Add the local clock to the ntp.conf file so that if the 
+#NTP server is disconnected from the internet, NTP server provides time from its local system clock.
+server  127.127.1.0 # local clock 
+fudge   127.127.1.0 stratum 10
+#driftfile is used to log how far your clock is from what it should be
+#and slowly ntp should lower this value as time progress.
+driftfile /var/lib/ntp/ntp.drift 
+logfile /var/log/ntp.log
+
 ```
+
+2. Reiniciar o ntp no notebook
+Após salvar o arquivo no passo anterior (precisa ter permissão de admin para salvar), foi reiniciado o serviço do ntp pelo terminal através do comando abaixo
+```
+$ sudo service ntp restart
+```
+
+Obs: Para saber se o serviço está rodando, executar o comando `$ sudo service ntp status`
+
+3. Editar o /etc/ntp.conf na Rasp
+Para que a Rasp consiga saber que o notebook agora é um servidor ntp, é necessário apenas incluir uma linha no ntp.conf da Rasp
+```
+server [IP_DO_NOTEBOOK] prefer
+```
+Nesse caso o IP_DO_NOTEBOOK era 10.42.0.1 na subrede entre ele e a Rasp, então o comando ficou `server 10.42.0.1 prefer`
+
+4. Reiniciar o ntp na Rasp
+Depois de salvar o arquivo no passo anterior, é necessário reiniciar o serviço do ntp pelo terminal 
+```
+$ sudo /etc/init.d/ntp start
+```
+
+Depois desses passos o servidor já está configurado. Pra testar a sincronização dos relógios pode-se alterar manualmente a data no notebook e em seguida rodar os seguintes comandos no terminal da Rasp
+
+Realiza a busca de todos os servidores ntp disponíveis no arquivo de ntp.conf
+```
+$ ntpq -p
+```
+obs: deveria aparece na coluna *remote* o ip do notebook e na coluna *refid* o valor **LOCAL**. Caso não apareça ou apareça diferente, rodar o comando `sudo service ntp reload` e em seguida executar o passo 4 mencionando anteriormente.
+
+Atualizar a data/hora da Rasp com a data/hora do notebook
+```
+$ sudo ntpdate -u [IP_DO_NOTEBOOK]
+```
+Nesse caso o IP_DO_NOTEBOOK era 10.42.0.1 na subrede entre ele e a Rasp, então o comando ficou `sudo ntpdate -u 10.42.0.1`
+
+Para voltar a ajustar o horario do notebook com o horário da internet, executar no terminal do note o comando
+```
+$ sudo ntpdate -u b.st1.ntp.br
+```
+
+
+Durante a realização do experimento, o horário do notebook foi sincronizado com a internet e então foi executado o comando `$ sudo ntpdate -u [IP_DO_NOTEBOOK]` no terminal da Rasp até fosse obtido um offset abaixo de 0.00000...
 
 ### 2. Simulando a rede
 Para simular a rede de baixa qualidade foi utilizado [este script](network-emulation/tc-con) rodado direto no terminal da placa RPi.
