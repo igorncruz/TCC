@@ -4,12 +4,20 @@ from pathlib import Path
 # Se o cliente for executado no windows ou Visual Code, descomentar a linha abaixo
 # sys.path.insert(0, str(Path().resolve()))
 # Se o cliente for executado no linux, descomentar a linha abaixo
-sys.path.insert(0, str(Path().resolve().parent.parent))
+sys.path.insert(0, str(Path().resolve().parent))
+#importando o módulo de Thread
+import threading
 
 from data import Data
 import util
 
 TAB_1 = '\t - '
+
+data = Data()
+def send(conn, index):
+    conn.request("POST", "/markdown", data.getByIndex(index))
+    response = conn.getresponse()
+    print(TAB_1 + "Pacote enviado: {}  {}".format(response.status, response.reason))
 
 class Client():
     _dados = Data()
@@ -71,14 +79,13 @@ class Client():
 
     def sendPackage(self, index):
         print(TAB_1 + "Enviando pacote ...")
-        dados = self._dados.getByIndex(index)
+        # data = self._dados.getByIndex(index)
 
-        headers = {'Content-type': 'application/json',
-            'X-Timestamp': str(time.time()),
-        }
-        self.conn.request("POST", "/markdown", dados, headers)
-        response = self.conn.getresponse()
-        print(TAB_1 + "Pacote enviado: {}  {}".format(response.status, response.reason))
+        t = threading.Thread(target=send, args=(self.conn, index))
+        t.start()
+        # self.conn.request("POST", "/markdown", data)
+        # response = self.conn.getresponse()
+        # print(TAB_1 + "Pacote enviado: {}  {}".format(response.status, response.reason))
 
 def main():
     client = Client()
