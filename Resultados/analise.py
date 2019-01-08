@@ -38,7 +38,7 @@ class PackagePair():
         self.received = received
 
     def findReceivedPair(self, packageReceivedList):
-        tsLimit = util.addSecs(self.sent.timestamp, 30).timestamp()
+        tsLimit = util.addSecs(self.sent.timestamp, 60).timestamp()
         for pkg in packageReceivedList:
             if pkg.timestamp > tsLimit:
                 break
@@ -215,8 +215,9 @@ class Analyze():
 
 
 def main():
-    analise = Analyze('http/notebook/http_factor_3_3_3_server.pcap',
-               'http/rPi/http_factor_3_3_3_client.pcap', 'http/http_factor_3_3_3_result')
+    analise = Analyze('http/notebook/http_1_1_1_factor_server.pcap',
+                      'http/rPi/http_1_1_1_factor_client.pcap',
+                      'http/http_1_1_1_factor_result__2019-01-08.txt')
     analise.generateFile()
 
 if __name__ == '__main__':
