@@ -18,15 +18,18 @@ data = Data()
 
 def send(conn, index):
     id = uuid.uuid4().time_mid
-    headers = {
-        'Content-type': 'application/json',
-        'X-Timestamp': str(time.time()),
-        'id': id,
-    }
-    conn.request("POST", "/markdown", data.getByIndex(index), headers)
-    response = conn.getresponse()
-    print(TAB_1 + "Pacote id {} enviado: {}  {}".format(
-        id, response.status, response.reason))
+    try:
+        headers = {
+            'Content-type': 'application/json',
+            'X-Timestamp': str(time.time()),
+            'id': id,
+        }
+        conn.request("POST", "/markdown", data.getByIndex(index), headers)
+        response = conn.getresponse()
+        print(TAB_1 + "Pacote id {} enviado: {}  {}".format(
+            id, response.status, response.reason))
+    except:
+        print(TAB_1 + "Pacote id {} dropado".format(id))
 
 
 class Client():
