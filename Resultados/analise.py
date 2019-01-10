@@ -215,9 +215,9 @@ class Analyze():
 
 
 def main():
-    analise = Analyze('http/notebook/http_1_1_1_factor_server.pcap',
-                      'http/rPi/http_1_1_1_factor_client.pcap',
-                      'http/http_1_1_1_factor_result__2019-01-08.txt')
+    analise = Analyze('http/notebook/http_no_factor_server__2019-01-09-v2.pcap',
+                      'http/rPi/http_no_factor_client__2019-01-09-v2.pcap',
+                      'http/http_no_factor_result__2019-01-09-v2.txt')
     analise.generateFile()
 
 if __name__ == '__main__':

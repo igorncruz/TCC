@@ -1,5 +1,5 @@
 #importando a classe de Dados
-import sys, http.client, time, datetime
+import sys, http.client, time, datetime, uuid
 from pathlib import Path
 # Se o cliente for executado no windows ou Visual Code, descomentar a linha abaixo
 # sys.path.insert(0, str(Path().resolve()))
@@ -14,10 +14,20 @@ import util
 TAB_1 = '\t - '
 
 data = Data()
+
+
 def send(conn, index):
-    conn.request("POST", "/markdown", data.getByIndex(index))
+    id = uuid.uuid4().time_mid
+    headers = {
+        'Content-type': 'application/json',
+        'X-Timestamp': str(time.time()),
+        'id': id,
+    }
+    conn.request("POST", "/markdown", data.getByIndex(index), headers)
     response = conn.getresponse()
-    print(TAB_1 + "Pacote enviado: {}  {}".format(response.status, response.reason))
+    print(TAB_1 + "Pacote id {} enviado: {}  {}".format(
+        id, response.status, response.reason))
+
 
 class Client():
     _dados = Data()
@@ -49,7 +59,7 @@ class Client():
     #reps:
 
     #timePerRep:
-    def startExperiment(self, reps = -1, timePerRep=1):
+    def startExperiment(self, reps=-1, timePerRep=1):
         """
 		Inicia o Experimento
 		>>Reps: quantidade de repetições que o experimento terá. 
@@ -62,7 +72,8 @@ class Client():
 
         # self.sendTestPackage()
 
-        print("\nIniciando o experimento às {0}".format(util.getFormattedDatetimeWithMillisec()))
+        print("\nIniciando o experimento às {0}".format(
+            util.getFormattedDatetimeWithMillisec()))
 
         if (reps <= 0):
             reps = self._dados.length()
@@ -73,7 +84,8 @@ class Client():
             str(datetime.timedelta(seconds=duracao))))
 
         for i in range(0, reps):
-            print("iniciando repetição {} às {}".format(i+1, str(util.getFormattedDatetimeWithMillisec())))
+            print("iniciando repetição {} às {}".format(
+                i + 1, str(util.getFormattedDatetimeWithMillisec())))
             self.sendPackage(i)
             time.sleep(timePerRep)
 
@@ -87,15 +99,20 @@ class Client():
         # response = self.conn.getresponse()
         # print(TAB_1 + "Pacote enviado: {}  {}".format(response.status, response.reason))
 
+
 def main():
     client = Client()
-    address = input('Digite o endereço do servidor: (ou deixe em branco caso seja "localhost")\n')
+    address = input(
+        'Digite o endereço do servidor: (ou deixe em branco caso seja "localhost")\n'
+    )
     if (address == ''):
         client.establishConnection(port=8080)
     else:
         client.establishConnection(address=address, port=8080)
 
-    reps = input('\nDigite a quantidade de pacotes que você deseja enviar: (ou deixe em branco para enviar a quantidade máxima possível )\n')
+    reps = input(
+        '\nDigite a quantidade de pacotes que você deseja enviar: (ou deixe em branco para enviar a quantidade máxima possível )\n'
+    )
 
     try:
         reps = int(reps)

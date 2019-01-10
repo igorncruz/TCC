@@ -31,13 +31,15 @@ class Server(BaseHTTPRequestHandler):
     def do_HEAD(self):
         self._set_headers()
 
+
 # GET
+
     def do_GET(self):
         # Send response status code
         self.send_response(200)
 
         # Send headers
-        self.send_header('Content-type','text/html')
+        self.send_header('Content-type', 'text/html')
         self.end_headers()
 
         # Send message back to client
@@ -47,13 +49,16 @@ class Server(BaseHTTPRequestHandler):
         return
 
     def do_POST(self):
-        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
-        print("\nPacote de tamanho {} recebido às {}".format(
-            content_length, util.getFormattedDatetimeWithMillisec()))
+        content_length = int(
+            self.headers['Content-Length'])  # <--- Gets the size of data
+        pkgId = self.headers['id']  # <--- Gets the size of data
+        print("\nPacote id {} de tamanho {} recebido às {}".format(
+            pkgId, content_length, util.getFormattedDatetimeWithMillisec()))
         # print(self)
         # post_data = self.rfile.read(content_length) # <--- Gets the data itself
         # print(post_data) # <-- Print post data
         self._set_headers()
+
 
 def run(server_class=HTTPServer, handler_class=Server, port=8080):
     server_address = ('', port)
@@ -69,11 +74,11 @@ def run(server_class=HTTPServer, handler_class=Server, port=8080):
     print('Iniciando servidor HTTP em {}:{}...\n'.format(ip, port))
     httpd.serve_forever()
 
+
 if __name__ == "__main__":
     from sys import argv
     import netifaces as ni
     print(ni.interfaces())
-
 
     if len(argv) == 2:
         run(port=int(argv[1]))
