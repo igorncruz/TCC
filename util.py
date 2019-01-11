@@ -1,18 +1,25 @@
 import datetime, time
 
-def getFormattedDatetimeWithMillisec(timestamp = ''):
+
+def getFormattedDatetimeWithMillisec(timestamp=''):
     if (timestamp == ''):
         timestamp = time.time()
 
-    return datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+    return datetime.datetime.fromtimestamp(timestamp).strftime(
+        '%Y-%m-%d %H:%M:%S.%f')[:-3]
+
 
 def getFormattedDateTimeFromSeconds(toSeconds, fromTimestamp=''):
     if (fromTimestamp == ''):
         fromTimestamp = time.time()
 
     toSeconds = toSeconds + fromTimestamp
-    return datetime.datetime.fromtimestamp(toSeconds).strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.datetime.fromtimestamp(toSeconds).strftime(
+        '%Y-%m-%d %H:%M:%S')
 
+
+def nowStr():
+    return str(datetime.datetime.now())
 
 
 def addSecs(tms, secs):
@@ -23,10 +30,11 @@ def addSecs(tms, secs):
 
 
 def main():
-    a = addSecs(time.time(), 300 )
+    a = addSecs(time.time(), 300)
     b = addSecs(a.timestamp(), 300)
     print(a)
     print(b)
+
 
 if __name__ == '__main__':
     main()
