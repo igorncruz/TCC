@@ -6,6 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path().resolve().parent))
 import util
 
+SECONDS_FOR_EACH_REP = 300  #Cada repetição dura 5 min
 
 class Package():
     def __init__(self, timestamp, pkt):
@@ -38,27 +39,26 @@ class PackagePair():
         self.received = received
 
     def findReceivedPair(self, packageReceivedList):
-        tsLimit = util.addSecs(self.sent.timestamp, 60).timestamp()
-        for pkg in packageReceivedList:
-            if pkg.timestamp > tsLimit:
+        tsUpperLimit = util.addSecs(self.sent.timestamp, 15).timestamp()
+        tsLowerLimit = util.addSecs(self.sent.timestamp, -15).timestamp()
+
+        for receivedPkg in packageReceivedList:
+            if receivedPkg.timestamp > tsUpperLimit:
                 break
-            elif pkg.timestamp < self.sent.timestamp:
+            elif receivedPkg.timestamp < tsLowerLimit:
                 continue
-            elif (pkg.id == self.sent.id):
-                self.received = pkg
+            elif (receivedPkg.id == self.sent.id):
+                self.received = receivedPkg
                 self.__calculateMetrics__()
                 return True
         return False
 
     def __calculateMetrics__(self):
         self.delay = self.received.timestamp - self.sent.timestamp
-        if (self.delay < 0):
-            print('pacote enviado às {} e recebido às {}'.format(
-                util.getFormattedDatetimeWithMillisec(self.sent.timestamp),
-                util.getFormattedDatetimeWithMillisec(self.received.timestamp)))
 
 
 class Repetition():
+    id = 0
     averageDelay = -1
     averagePkgLen = -1
     averagePkgLenDelay = -1
@@ -67,14 +67,15 @@ class Repetition():
     ratePkgPerSec = -1
     pkgLost = -1
 
-    def __init__(self, startTimestamp, endTtimestamp, listPackagesClient, listPackagesServer):
+    def __init__(self, id, startTimestamp, endTtimestamp, listPackagesClient, listPackagesServer):
+        self.id = id
         self.startTimestamp = startTimestamp
         self.endTtimestamp = endTtimestamp
+        print("{} - Encontrando os pares dos pacotes".format(util.nowStr()))
         self.listPackages = self.__extractPackages__(listPackagesClient, listPackagesServer)
-        print('criando repetição de {} à {} com {} pacotes'.format(
-            util.getFormattedDatetimeWithMillisec(startTimestamp),
-            util.getFormattedDatetimeWithMillisec(endTtimestamp),
-            len(self.listPackages)))
+        print("{} - {} pacotes encontrados".format(util.nowStr(),
+                                                   len(self.listPackages)))
+        print("{} - Calculando métricas dos pacotes".format(util.nowStr()))
         self.calculateMetrics()
 
 
@@ -82,14 +83,26 @@ class Repetition():
         if len(listPackagesClient) > 0:
             self.pkgLost = 0
 
-        list = []
-        for pkg in listPackagesClient:
-            if (pkg.timestamp >= self.endTtimestamp):
-                break
-            elif (pkg.timestamp < self.startTimestamp):
+        minIndex = -1
+        maxIndex = -1
+        for i, pkg in enumerate(listPackagesClient):
+            if (pkg.timestamp < self.startTimestamp):
                 continue
+            if(minIndex < 0):
+                minIndex = i
+            if (pkg.timestamp >= self.endTtimestamp):
+                maxIndex = i
+                break
+        print("index do primeiro e último pacotes da Repetição: {} e {}".format( str(minIndex), str(maxIndex)))
+
+        list = []
+
+        for i, pkg in enumerate(listPackagesClient[minIndex:maxIndex]):
+            # if (pkg.timestamp >= self.endTtimestamp):
+            #     break
+            # print("{} - Buscando o par do pacote {}".format(util.nowStr(), minIndex + i))
             pkgPair = PackagePair(pkg)
-            if pkgPair.findReceivedPair(listPackagesServer):
+            if pkgPair.findReceivedPair(listPackagesServer[minIndex:maxIndex]):
                 list.append(pkgPair)
             else:
                 self.pkgLost += 1
@@ -112,17 +125,17 @@ class Repetition():
             sumPayloadLen += pkg.received.lenPayload
             sumPayloadLenDelay += (pkg.received.lenPayload/pkg.delay)
         self.averageDelay = sumDelay / len(self.listPackages)
-        self.averagePkgLen = sumPkgLen / 60
+        self.averagePkgLen = sumPkgLen / SECONDS_FOR_EACH_REP
         self.averagePkgLenDelay = sumPkgLenDelay / len(self.listPackages)
-        self.averagePayloadLen = sumPayloadLen / 60
+        self.averagePayloadLen = sumPayloadLen / SECONDS_FOR_EACH_REP
         self.averagePayloadLenDelay = sumPayloadLenDelay / len(self.listPackages)
-        self.ratePkgPerSec = len(self.listPackages) / 60
+        self.ratePkgPerSec = len(self.listPackages) / SECONDS_FOR_EACH_REP
 
 
 
 
 class Analyze():
-    secondsForEachRep = 60 #Cada repetição dura 1 min
+
     def __init__(self, pcapFileFromServer, pcapFileFromClient, outputFileName):
         self.outputFileName = outputFileName
         self.pcapFileFromClient = pcapFileFromClient
@@ -145,9 +158,13 @@ class Analyze():
         startTS = self.listPackageClient[0].timestamp
         endTS = self.listPackageServer[-1].timestamp
         while (startTS <= endTS):
-            print('processando repetição : {}'.format(len(self.reps)))
-            endTSAux = util.addSecs(startTS, self.secondsForEachRep).timestamp()
-            self.reps.append(Repetition(startTS, endTSAux, self.listPackageClient, self.listPackageServer))
+            endTSAux = util.addSecs(startTS, SECONDS_FOR_EACH_REP).timestamp()
+            print('\nProcessando repetição {}: de {} à {}'.format(
+                len(self.reps),
+                util.getFormattedDatetimeWithMillisec(startTS),
+                util.getFormattedDatetimeWithMillisec(endTSAux),
+            ))
+            self.reps.append(Repetition(len(self.reps), startTS, endTSAux, self.listPackageClient, self.listPackageServer))
             startTS = endTSAux
 
     def generateFile(self):
@@ -215,9 +232,9 @@ class Analyze():
 
 
 def main():
-    analise = Analyze('http/notebook/http_no_factor_server__2019-01-09-v2.pcap',
-                      'http/rPi/http_no_factor_client__2019-01-09-v2.pcap',
-                      'http/http_no_factor_result__2019-01-09-v2.txt')
+    analise = Analyze('http/notebook/http_factor_l3_v3_p3_with_thread_server__2019-01-11.pcap',
+                      'http/rPi/http_factor_l3_v3_p3_with_thread_client__2019-01-11.pcap',
+                      'http/http_l3_v3_p3_factor_result__2019-01-11.txt')
     analise.generateFile()
 
 if __name__ == '__main__':
