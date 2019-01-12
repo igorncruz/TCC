@@ -121,9 +121,10 @@ class Repetition():
         for pkg in self.listPackages:
             sumDelay += pkg.delay
             sumPkgLen += pkg.received.lenPkg
-            sumPkgLenDelay += (pkg.received.lenPkg/pkg.delay)
+            sumPkgLenDelay += (pkg.received.lenPkg/pkg.delay) if pkg.delay > 0 else 0
             sumPayloadLen += pkg.received.lenPayload
-            sumPayloadLenDelay += (pkg.received.lenPayload/pkg.delay)
+            sumPayloadLenDelay += (
+                pkg.received.lenPayload / pkg.delay) if pkg.delay > 0 else 0
         self.averageDelay = sumDelay / len(self.listPackages)
         self.averagePkgLen = sumPkgLen / SECONDS_FOR_EACH_REP
         self.averagePkgLenDelay = sumPkgLenDelay / len(self.listPackages)
@@ -234,7 +235,7 @@ class Analyze():
 def main():
     analise = Analyze('http/notebook/http_factor_l3_v3_p3_with_thread_server__2019-01-11.pcap',
                       'http/rPi/http_factor_l3_v3_p3_with_thread_client__2019-01-11.pcap',
-                      'http/http_l3_v3_p3_factor_result__2019-01-11.txt')
+                      'http/http_l3_v3_p3_factor_result__2019-01-11.txt.txt')
     analise.generateFile()
 
 if __name__ == '__main__':
