@@ -30,24 +30,24 @@ TC=/sbin/tc
 IF=eth0
 
 # Rate (both ways)
-RATE=21kbit
+#RATE=21kbit
 #RATE=14kbit
-#RATE=7kbit
+RATE=7kbit
 
 # Delay amount
-DELAY=10ms
+#DELAY=10ms
 #DELAY=100ms
-#DELAY=400ms
+DELAY=400ms
 
 # Amount of delay variance (+/-)
-DELAY_VARIANCE=2ms
+#DELAY_VARIANCE=2ms
 #DELAY_VARIANCE=20ms
-#DELAY_VARIANCE=80ms
+DELAY_VARIANCE=80ms
 
 # Packet loss amount
-PACKET_LOSS=0%
+#PACKET_LOSS=0%
 #PACKET_LOSS=15%
-#PACKET_LOSS=25%
+PACKET_LOSS=25%
 
 # Packet loss variance
 #PACKET_LOSS_VARIANCE=5%
