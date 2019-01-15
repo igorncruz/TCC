@@ -9,7 +9,7 @@ from pathlib2 import Path
 # Se o cliente for executado no linux, descomentar a linha abaixo
 print Path().resolve()
 sys.path.insert(0, str(Path().resolve()))
-# sys.path.insert(0, str(Path().resolve().parent))
+sys.path.insert(0, str(Path().resolve().parent))
 from data2 import Data
 import util
 from coapthon.client.helperclient import HelperClient
@@ -56,11 +56,15 @@ class Client():
             print "iniciando repetição {} às {}".format(i+1, str(util.getFormattedDatetimeWithMillisec()))
             self.sendPackage(i)
             time.sleep(timePerRep)
+        self.conn.stop()        
 
     def sendPackage(self, index):
         print TAB_1 + "Enviando pacote ..."
-        response = self.conn.post(self.__path, self._dados.getByIndex(index))
-        # print TAB_1 + "Pacote enviado: {}  {}".format(response.status, response.reason))
+        try:
+            response = self.conn.post(self.__path, self._dados.getByIndex(index), timeout=5)
+            print TAB_1 + "Pacote enviado: " + str(response)
+        except:
+            print TAB_1 + "Pacote dropado:"
 
 
 def main():
