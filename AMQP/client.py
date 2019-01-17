@@ -4,10 +4,10 @@ import pika
 import sys, time, datetime
 from pathlib import Path
 # Se o cliente for executado no windows ou Visual Studio Code, descomentar a linha abaixo
-sys.path.insert(0, str(Path().resolve()))
+#sys.path.insert(0, str(Path().resolve()))
 # Se o cliente for executado no linux, descomentar a linha abaixo
-# sys.path.insert(0, str(Path().resolve().parent))
-# print Path().resolve()
+sys.path.insert(0, str(Path().resolve().parent))
+#print Path().resolve()
 from data import Data
 import util
 
@@ -26,8 +26,9 @@ class Client():
         print('porta: ' + str(port))
         print('dados: ' + dataTest)
 
+        credentials = pika.PlainCredentials('pi','raspberry')
         connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=address))
+            pika.ConnectionParameters(host=address, credentials=credentials))
         self.channel = connection.channel()
         self.channel.queue_declare(self.queue)
         response = self.channel.basic_publish(exchange='', routing_key=self.queue, body=dataTest)
