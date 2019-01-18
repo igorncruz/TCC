@@ -14,19 +14,27 @@ class Package():
             eth = dpkt.ethernet.Ethernet(pkt)  #extraindo dados do pacote
             if isinstance(eth.data, dpkt.ip.IP):
                 ip = eth.data
+                self.id = ip.id
+                self.lenPkg = ip.len
+                self.timestamp = timestamp
+                self.readableTS = str(
+                    datetime.datetime.utcfromtimestamp(timestamp))
+                self.destAddress = socket.inet_ntoa(ip.dst)
+                self.srcAddress = socket.inet_ntoa(ip.src)
                 if isinstance(ip.data, dpkt.tcp.TCP):
                     tcp = ip.data
-                    self.timestamp = timestamp
-                    self.readableTS = str(
-                        datetime.datetime.utcfromtimestamp(timestamp))
-                    self.destAddress = socket.inet_ntoa(ip.dst)
-                    self.srcAddress = socket.inet_ntoa(ip.src)
-                    self.id = ip.id
-                    self.lenPkg = ip.len
                     self.destPort = tcp.dport
                     self.srcPort = tcp.sport
                     self.data = tcp.data
                     self.lenPayload = len(tcp.data)
+                elif (isinstance(ip.data, dpkt.udp.UDP)):
+                    udp = ip.data
+                    self.destPort = udp.dport
+                    self.srcPort = udp.sport
+                    self.data = udp.data
+                    self.lenPayload = len(udp.data)
+
+
         except (dpkt.dpkt.NeedData, dpkt.dpkt.UnpackError):
             pass
 
@@ -233,9 +241,10 @@ class Analyze():
 
 
 def main():
-    analise = Analyze('http/notebook/http_factor_l1_v1_p1_with_thread_server__2019-01-12.pcap',
-                      'http/rPi/http_factor_l1_v1_p1_with_thread_client__2019-01-12.pcap',
-                      'http/http_l1_v1_p1_factor_result__2019-01-12.txt')
+    analise = Analyze(
+        'mqtt/server/mqtt_factor_l1_v1_p1_without_thread_server__2019-01-16.pcap',
+        'mqtt/client/mqtt_factor_l1_v1_p1_without_thread_client__2019-01-16.pcap',
+        'mqtt/mqtt_factor_l1_v1_p1_result__2019-01-16.txt')
     analise.generateFile()
 
 if __name__ == '__main__':
