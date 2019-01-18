@@ -27,7 +27,8 @@
 TC=/sbin/tc
 
 # The network interface we're planning on limiting bandwidth.
-IF=eth0
+#IF=eth0
+IF=enp9s0
 
 # Rate (both ways)
 RATE=21kbit
@@ -35,14 +36,14 @@ RATE=21kbit
 #RATE=7kbit
 
 # Delay amount
-DELAY=10ms
+#DELAY=10ms
 #DELAY=100ms
-#DELAY=400ms
+DELAY=400ms
 
 # Amount of delay variance (+/-)
-DELAY_VARIANCE=2ms
+#DELAY_VARIANCE=2ms
 #DELAY_VARIANCE=20ms
-#DELAY_VARIANCE=80ms
+DELAY_VARIANCE=80ms
 
 # Packet loss amount
 PACKET_LOSS=0%

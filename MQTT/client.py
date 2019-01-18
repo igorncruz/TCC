@@ -77,9 +77,11 @@ class Client():
 
     def sendPackage(self, index):
         print(TAB_1 + "Enviando pacote ...")
+        #pegar timestamp: ida
         response = self.mqttc.publish('tcc', self._dados.getByIndex(index))
+        #pegar timestamp: volta
         print(TAB_1 + 'enviado: ' + str(response.is_published()))
-        
+
         while(not response.is_published()):
             print(TAB_1 + "enviando novamente...")
             self.mqttc.connect(address, port)
