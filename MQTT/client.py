@@ -79,6 +79,12 @@ class Client():
         print(TAB_1 + "Enviando pacote ...")
         response = self.mqttc.publish('tcc', self._dados.getByIndex(index))
         print(TAB_1 + 'enviado: ' + str(response.is_published()))
+        
+        while(not response.is_published()):
+            print(TAB_1 + "enviando novamente...")
+            self.mqttc.connect(address, port)
+            response = self.mqttc.publish('tcc', self._dados.getByIndex(index))
+            print(TAB_1 + 'enviado: ' + str(response.is_published()))
         # print TAB_1 + "Pacote enviado: {}  {}".format(response.status, response.reason))
 
 
