@@ -15,7 +15,7 @@ from pathlib import Path
 # Se o cliente for executado no linux, descomentar a linha abaixo
 # print Path().resolve()
 sys.path.insert(0, str(Path().resolve()))
-# sys.path.insert(0, str(Path().resolve().parent))
+sys.path.insert(0, str(Path().resolve().parent))
 from data2 import Data
 import util
 
