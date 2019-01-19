@@ -75,17 +75,23 @@ class Client():
     def sendPackage(self, index):
         print(TAB_1 + "Enviando pacote ...")
         dados = self._dados.getByIndex(index)
+        sentPkg = False
+        while !sentPkg:
+            try:
+                id = uuid.uuid4().time_mid
+                headers = {
+                    'Content-type': 'application/json',
+                    'X-Timestamp': str(time.time()),
+                    'id': id,
+                }
+                self.conn.request("POST", "/markdown", dados, headers)
+                response = self.conn.getresponse()
+                print(TAB_1 + "Pacote id {} enviado: {}  {}".format(
+                    id, response.status, response.reason))
+                sentPkg = True
+            except:
+                print("Erro de conexão; Tentando enviar o pacote novamente")
 
-        id = uuid.uuid4().time_mid
-        headers = {
-            'Content-type': 'application/json',
-            'X-Timestamp': str(time.time()),
-            'id': id,
-        }
-        self.conn.request("POST", "/markdown", dados, headers)
-        response = self.conn.getresponse()
-        print(TAB_1 + "Pacote id {} enviado: {}  {}".format(
-            id, response.status, response.reason))
 
 
 def main():
