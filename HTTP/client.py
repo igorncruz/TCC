@@ -76,7 +76,7 @@ class Client():
         print(TAB_1 + "Enviando pacote ...")
         dados = self._dados.getByIndex(index)
         sentPkg = False
-        while !sentPkg:
+        while not sentPkg:
             try:
                 id = uuid.uuid4().time_mid
                 headers = {
