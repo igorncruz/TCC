@@ -99,6 +99,7 @@ class Client():
                     'X-Timestamp': str(sentPkgTimestamp),
                     'id': id,
                 }
+                sentPkgTimestamp = time.time()
                 self.conn.request("POST", "/markdown", dados, headers)
                 response = self.conn.getresponse()
                 responseTimestamp = time.time()
