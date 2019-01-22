@@ -16,6 +16,8 @@ class Client():
     _dados = Data()
     conn = ''
     startExperimentTS = ''
+    lostPkgs = []
+    delayPkgs = []
 
     def sendTestPackage(self):
         print("\nenviando pacote de testes")
@@ -42,7 +44,7 @@ class Client():
     #reps:
 
     #timePerRep:
-    def startExperiment(self, reps=-1, timePerRep=1):
+    def startExperiment(self, reps=-1, fileName="teste", timePerRep=1):
         """
 		Inicia o Experimento
 		>>Reps: quantidade de repetições que o experimento terá. 
@@ -71,27 +73,44 @@ class Client():
                 i + 1, str(util.getFormattedDatetimeWithMillisec())))
             self.sendPackage(i)
             time.sleep(timePerRep)
+        self.generateDelayAndLostFiles(fileName)
+
+    def generateDelayAndLostFiles(self, fileName):
+        if (len(self.delayPkgs) > 0):
+            fileDelay = open(fileName + "-delay.txt", 'w')
+            for i in self.delayPkgs:
+                fileDelay.write("{},{},{}\n".format(i[0], i[1], i[2]))
+
+        if len(self.lostPkgs) > 0:
+            fileLost = open(fileName + "-perda.txt", 'w')
+            for i in self.lostPkgs:
+                fileLost.write("{}\n".format(i))
 
     def sendPackage(self, index):
         print(TAB_1 + "Enviando pacote ...")
         dados = self._dados.getByIndex(index)
         sentPkg = False
-        while !sentPkg:
+        while not sentPkg:
+            sentPkgTimestamp = time.time()
             try:
                 id = uuid.uuid4().time_mid
                 headers = {
                     'Content-type': 'application/json',
-                    'X-Timestamp': str(time.time()),
+                    'X-Timestamp': str(sentPkgTimestamp),
                     'id': id,
                 }
                 self.conn.request("POST", "/markdown", dados, headers)
                 response = self.conn.getresponse()
+                responseTimestamp = time.time()
+                self.delayPkgs.append((id, sentPkgTimestamp,
+                                       responseTimestamp))
+
                 print(TAB_1 + "Pacote id {} enviado: {}  {}".format(
                     id, response.status, response.reason))
                 sentPkg = True
             except:
+                self.lostPkgs.append(sentPkgTimestamp)
                 print("Erro de conexão; Tentando enviar o pacote novamente")
-
 
 
 def main():
@@ -107,13 +126,16 @@ def main():
     reps = input(
         '\nDigite a quantidade de pacotes que você deseja enviar: (ou deixe em branco para enviar a quantidade máxima possível )\n'
     )
+    fileName = input(
+        '\nDigite o nome do arquivo (sem a extensão) em que serão registrados a perda de pacotes e delay a nível de aplicação\n'
+    )
 
     try:
         reps = int(reps)
     except ValueError:
         reps = -1
 
-    client.startExperiment(reps)
+    client.startExperiment(reps, fileName)
 
 
 if __name__ == '__main__':
