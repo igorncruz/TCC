@@ -87,7 +87,7 @@ class Client():
                 fileLost.write("{}\n".format(i))
 
     def sendPackage(self, index):
-        print(TAB_1 + "Enviando pacote ...")
+        print(TAB_1 + "Obtendo os dados p/ envio ...")
         dados = self._dados.getByIndex(index)
         sentPkg = False
         while not sentPkg:
@@ -100,14 +100,15 @@ class Client():
                     'id': id,
                 }
                 sentPkgTimestamp = time.time()
+                print(TAB_1 + "Enviando pacote...")
                 self.conn.request("POST", "/markdown", dados, headers)
                 response = self.conn.getresponse()
+                print(TAB_1 + "Pacote id {} enviado: {}  {}".format(
+                    id, response.status, response.reason))
                 responseTimestamp = time.time()
                 self.delayPkgs.append((id, sentPkgTimestamp,
                                        responseTimestamp))
 
-                print(TAB_1 + "Pacote id {} enviado: {}  {}".format(
-                    id, response.status, response.reason))
                 sentPkg = True
             except:
                 self.lostPkgs.append(sentPkgTimestamp)
