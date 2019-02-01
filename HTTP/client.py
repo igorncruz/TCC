@@ -102,6 +102,7 @@ class Client():
                 sentPkgTimestamp = time.time()
                 print(TAB_1 + "Enviando pacote...")
                 self.conn.request("POST", "/markdown", dados, headers)
+                print(TAB_1 + "Obtendo resposta...")
                 response = self.conn.getresponse()
                 print(TAB_1 + "Pacote id {} enviado: {}  {}".format(
                     id, response.status, response.reason))
