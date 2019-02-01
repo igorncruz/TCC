@@ -1,5 +1,5 @@
 #importando a classe de Dados
-import sys, http.client, time, datetime, uuid
+import sys, http.client, time, datetime, uuid, signal
 from pathlib import Path
 # Se o cliente for executado no windows ou Visual Code, descomentar a linha abaixo
 # sys.path.insert(0, str(Path().resolve()))
@@ -18,6 +18,11 @@ class Client():
     startExperimentTS = ''
     lostPkgs = []
     delayPkgs = []
+    TIMEOUT = 10
+
+    def timeout_handler(self, num, stack):
+        print("!! Timeout nível de aplicação !!")
+        raise Exception("timeout-aplicação")
 
     def sendTestPackage(self):
         print("\nenviando pacote de testes")
@@ -92,6 +97,8 @@ class Client():
         sentPkg = False
         while not sentPkg:
             sentPkgTimestamp = time.time()
+            signal.signal(signal.SIGALRM, self.timeout_handler)
+            signal.alarm(self.TIMEOUT)
             try:
                 id = uuid.uuid4().time_mid
                 headers = {
@@ -113,7 +120,9 @@ class Client():
                 sentPkg = True
             except:
                 self.lostPkgs.append(sentPkgTimestamp)
-                print("Erro de conexão; Tentando enviar o pacote novamente")
+                print("Tentando enviar o pacote novamente")
+            finally:
+                signal.alarm(0)
 
 
 def main():

@@ -23,11 +23,11 @@ import util
 
 
 class Server(BaseHTTPRequestHandler):
-    timeout = 5
+    # timeout = 300
 
     def setup(self):
         BaseHTTPRequestHandler.setup(self)
-        self.request.settimeout(self.timeout)
+        # self.request.settimeout(self.timeout)
 
     def _set_headers(self):
         self.send_response(200)
