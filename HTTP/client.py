@@ -158,11 +158,11 @@ def main():
     else:
         client.establishConnection(address=address, port=8080)
 
-    reps = input(
-        '\nDigite a quantidade de pacotes que você deseja enviar: (ou deixe em branco para enviar a quantidade máxima possível )\n'
-    )
     fileName = input(
         '\nDigite o nome do arquivo (sem a extensão) em que serão registrados a perda de pacotes e delay a nível de aplicação\n'
+    )
+    reps = input(
+        '\nDigite a quantidade de pacotes que você deseja enviar: (ou deixe em branco para enviar a quantidade máxima possível )\n'
     )
 
     try:
