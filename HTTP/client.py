@@ -18,10 +18,12 @@ class Client():
     startExperimentTS = ''
     lostPkgs = []
     delayPkgs = []
-    TIMEOUT = 10
+    address = ""
+    port = ""
+    TIMEOUT = 20    
 
     def timeout_handler(self, num, stack):
-        print("!! Timeout nível de aplicação !!")
+        print("\n!! Timeout nível de aplicação !!")
         raise Exception("timeout-aplicação")
 
     def sendTestPackage(self):
@@ -39,12 +41,32 @@ class Client():
         print(response.status, response.reason)
 
     def establishConnection(self, address='localhost', port=8080):
+        self.address = address
+        self.port = port
         print('\nEstabelecendo conexão com ' + address + '...')
         self.conn = http.client.HTTPConnection(address, port)
         self.conn.request("HEAD", "/")
         res = self.conn.getresponse()
         if res.status == 200:
             print('conexão estebelecida!')
+    def reestablishConnection(self):
+        signal.signal(signal.SIGALRM, self.timeout_handler)
+        signal.alarm(self.TIMEOUT)
+        try:
+            print("Reestabelecendo conexão")
+            self.conn = http.client.HTTPConnection(self.address, self.port)
+            print("Enviando requisição HEAD")
+            self.conn.request("HEAD", "/")
+            print("Obtendo resposta")
+            res = self.conn.getresponse()
+            if res.status == 200:
+                print('conexão estebelecida!')
+        except Exception as ex:
+            print(ex)
+            self.reestablishConnection()
+        finally:
+            signal.alarm(0)            
+
 
     #reps:
 
@@ -120,6 +142,7 @@ class Client():
                 sentPkg = True
             except:
                 self.lostPkgs.append(sentPkgTimestamp)
+                self.reestablishConnection()
                 print("Tentando enviar o pacote novamente")
             finally:
                 signal.alarm(0)
