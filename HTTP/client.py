@@ -20,7 +20,8 @@ class Client():
     delayPkgs = []
     address = ""
     port = ""
-    TIMEOUT = 20    
+    TIMEOUT = 10
+    MAX_SEND_ATTEMPT_NUMBER = 3
 
     def timeout_handler(self, num, stack):
         print("\n!! Timeout nível de aplicação !!")
@@ -44,28 +45,27 @@ class Client():
         self.address = address
         self.port = port
         print('\nEstabelecendo conexão com ' + address + '...')
-        self.conn = http.client.HTTPConnection(address, port)
+        self.conn = http.client.HTTPConnection(self.address, self.port)
         self.conn.request("HEAD", "/")
         res = self.conn.getresponse()
         if res.status == 200:
             print('conexão estebelecida!')
+
     def reestablishConnection(self):
-        signal.signal(signal.SIGALRM, self.timeout_handler)
-        signal.alarm(self.TIMEOUT)
         try:
             print("Reestabelecendo conexão")
+            self.conn.close()
             self.conn = http.client.HTTPConnection(self.address, self.port)
-            print("Enviando requisição HEAD")
-            self.conn.request("HEAD", "/")
-            print("Obtendo resposta")
-            res = self.conn.getresponse()
-            if res.status == 200:
-                print('conexão estebelecida!')
+            self.conn.connect()
+            #print("Enviando requisição HEAD")
+            #self.conn.request("HEAD", "/")
+            #print("Obtendo resposta")
+            #res = self.conn.getresponse()
+            #if res.status == 200:
+            #    print('conexão estebelecida!')
         except Exception as ex:
             print(ex)
             self.reestablishConnection()
-        finally:
-            signal.alarm(0)            
 
 
     #reps:
@@ -116,13 +116,15 @@ class Client():
     def sendPackage(self, index):
         print(TAB_1 + "Obtendo os dados p/ envio ...")
         dados = self._dados.getByIndex(index)
-        sentPkg = False
-        while not sentPkg:
+        sentPkgCount = 0
+        self.reestablishConnection()
+        while sentPkgCount < self.MAX_SEND_ATTEMPT_NUMBER:
             sentPkgTimestamp = time.time()
             signal.signal(signal.SIGALRM, self.timeout_handler)
             signal.alarm(self.TIMEOUT)
             try:
-                id = uuid.uuid4().time_mid
+                #id = uuid.uuid4().time_mid
+                id = "{}.{}".format(str(index+1), str(sentPkgCount))
                 headers = {
                     'Content-type': 'application/json',
                     'X-Timestamp': str(sentPkgTimestamp),
@@ -138,12 +140,13 @@ class Client():
                 responseTimestamp = time.time()
                 self.delayPkgs.append((id, sentPkgTimestamp,
                                        responseTimestamp))
-
-                sentPkg = True
-            except:
+                sentPkgCount=self.MAX_SEND_ATTEMPT_NUMBER
+                
+            except Exception as e:
                 self.lostPkgs.append(sentPkgTimestamp)
+                print("!! Pacote dropado !! - Erro: {}!".format(str(e)))
                 self.reestablishConnection()
-                print("Tentando enviar o pacote novamente")
+                sentPkgCount+=1
             finally:
                 signal.alarm(0)
 
