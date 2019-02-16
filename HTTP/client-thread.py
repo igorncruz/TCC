@@ -21,31 +21,34 @@ delayPkgs = []
 def send(conn, index):
     print(TAB_1 + "Obtendo os dados p/ envio ...")
     dados = data.getByIndex(index)
-    sentPkg = False
-    while not sentPkg:
+    #sentPkg = False
+    #while not sentPkg:
+    sentPkgTimestamp = time.time()
+        
+    print(TAB_1 + "Enviando o pacote {} ...".format(index))
+    try:
+        id = uuid.uuid4().time_mid    
+        headers = {
+            'Content-type': 'application/json',
+            'X-Timestamp': str(sentPkgTimestamp),
+            'id': id,
+        }
         sentPkgTimestamp = time.time()
-        try:
-            id = uuid.uuid4().time_mid
-            headers = {
-                'Content-type': 'application/json',
-                'X-Timestamp': str(sentPkgTimestamp),
-                'id': id,
-            }
-            sentPkgTimestamp = time.time()
-            print(TAB_1 + "Enviando pacote...")
-            conn.request("POST", "/markdown", dados, headers)
-            print(TAB_1 + "Obtendo resposta...")
-            response = conn.getresponse()
-            print(TAB_1 + "Pacote id {} enviado: {}  {}".format(
-                id, response.status, response.reason))
-            responseTimestamp = time.time()
-            delayPkgs.append((id, sentPkgTimestamp, responseTimestamp))
+        print(TAB_1 + "Enviando o pacote {} ...".format(id))
+        conn.request("POST", "/markdown", dados, headers)
+        print(TAB_1 + "Obtendo resposta do pacote {} ...".format(id))
+        response = conn.getresponse()
+        print(TAB_1 + "Pacote id {} enviado: {}  {}".format(
+            index, response.status, response.reason))
+        responseTimestamp = time.time()
+        delayPkgs.append((id, sentPkgTimestamp, responseTimestamp))
 
-            sentPkg = True
-        except:
-            print(TAB_1 + "Pacote id {} dropado".format(id))
-            lostPkgs.append(sentPkgTimestamp)
-            print(TAB_1 + "Tentando enviar o pacote {} novamente".format(id))
+        #sentPkg = True
+    except Exception as e:
+        print(TAB_1 + "Pacote id {} dropado".format(index))
+        print(TAB_1 + "Exception: {}".format(e))
+        lostPkgs.append(sentPkgTimestamp)
+        
 
 
 class Client():
