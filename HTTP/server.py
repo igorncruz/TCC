@@ -11,7 +11,7 @@ Send a POST request::
     curl -d "foo=bar&bin=baz" http://localhost
 """
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import socketserver, time, datetime
+import socketserver, time, datetime, socket
 
 import sys
 from pathlib import Path
@@ -28,6 +28,7 @@ class Server(BaseHTTPRequestHandler):
     def setup(self):
         BaseHTTPRequestHandler.setup(self)
         # self.request.settimeout(self.timeout)
+        self.request.settimeout(20)
 
     def _set_headers(self):
         self.send_response(200)
@@ -71,11 +72,11 @@ def run(server_class=HTTPServer, handler_class=Server, port=8080):
     httpd = server_class(server_address, handler_class)
 
     #Se estiver executando em localhost, usar o codigo abaixo pra obter o IP
-    ip = ni.ifaddresses('wlp3s0')[ni.AF_INET][0]['addr']
-    print("meu ip em wlp3s0 é: {}".format(ip))
+    # ip = ni.ifaddresses('wlp3s0')[ni.AF_INET][0]['addr']
+    # print("meu ip em wlp3s0 é: {}".format(ip))
     #Se estiver executando em rede, usar o codigo abaixo pra obter o IP
-    # ip = ni.ifaddresses('enp9s0')[ni.AF_INET][0]['addr']
-    # print("meu ip em enp9s0 é: {}".format(ip))
+    ip = ni.ifaddresses('enp9s0')[ni.AF_INET][0]['addr']
+    print("meu ip em enp9s0 é: {}".format(ip))
 
     print('Iniciando servidor HTTP em {}:{}...\n'.format(ip, port))
     httpd.serve_forever()
