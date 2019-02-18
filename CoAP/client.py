@@ -7,7 +7,7 @@ from pathlib2 import Path
 # Se o cliente for executado no windows, descomentar a linha abaixo
 # sys.path.insert(0, str(Path().resolve()))
 # Se o cliente for executado no linux, descomentar a linha abaixo
-print Path().resolve()
+# print Path().resolve()
 sys.path.insert(0, str(Path().resolve()))
 sys.path.insert(0, str(Path().resolve().parent))
 from data2 import Data
@@ -25,11 +25,17 @@ class Client():
     conn = ''
     lostPkgs = []
     delayPkgs = []
+    TIMEOUT = 10
+    MAX_SEND_ATTEMPT_NUMBER = 3
+
+    def timeout_handler(self, num, stack):
+        print("\n!! Timeout nível de aplicação !!")
+        raise Exception("timeout-aplicação")
 
     def establishConnection(self, address='127.0.0.1', port=8080):
-        print 'endereco: ' + address
-        print 'porta: ' + str(port)
-        print 'dados: ' + self._dados.getRandom()
+        self.address = address
+        self.port = port
+        print 'estabelecendo conexão com ' + self.address + ' na porta ' + self.port
 
         self.conn = HelperClient(server=(address, port))
         response = self.conn.post(self.__path, "testando conexão!")
@@ -76,17 +82,20 @@ class Client():
                 fileLost.write("{}\n".format(repr(i)))
 
     def sendPackage(self, index):
-        print TAB_1 + "Enviando pacote ..."
+        print TAB_1 + "Obtendo os dados para envio.."
+        dados = self._dados.getByIndex(index)
         sentPkgTimestamp = time.time()
         try:
+            print TAB_1 + "Enviando pacote ..."
             response = self.conn.post(
-                self.__path, self._dados.getByIndex(index), timeout=5)
+                self.__path, , timeout=5)
             responseTimestamp = time.time()
             self.delayPkgs.append((sentPkgTimestamp, responseTimestamp))
             print TAB_1 + "Pacote enviado: " + str(response)
-        except:
+        except Exception as e:
+
             self.lostPkgs.append(sentPkgTimestamp)
-            print TAB_1 + "Pacote dropado."
+            print TAB_1 + "!! Pacote dropado !! - Erro: "+str(e)
 
 
 def main():

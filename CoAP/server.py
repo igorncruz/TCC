@@ -1,6 +1,7 @@
 from coapthon.server.coap import CoAP
 from coapthon.resources.resource import Resource
 
+
 class BasicResource(Resource):
     def __init__(self, name="BasicResource", coap_server=None):
         super(BasicResource, self).__init__(
@@ -21,7 +22,7 @@ class BasicResource(Resource):
 
     def render_POST(self, request):
         print "\nRecebendo requisicao POST"
-        print "payload: "+request.payload
+        print "request: " + str(request)
         res = BasicResource()
         res.location_query = request.uri_query
         res.payload = request.payload

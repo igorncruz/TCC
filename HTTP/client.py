@@ -57,12 +57,6 @@ class Client():
             self.conn.close()
             self.conn = http.client.HTTPConnection(self.address, self.port)
             self.conn.connect()
-            #print("Enviando requisição HEAD")
-            #self.conn.request("HEAD", "/")
-            #print("Obtendo resposta")
-            #res = self.conn.getresponse()
-            #if res.status == 200:
-            #    print('conexão estebelecida!')
         except Exception as ex:
             print(ex)
             self.reestablishConnection()
