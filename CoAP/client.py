@@ -35,7 +35,7 @@ class Client():
     def establishConnection(self, address='127.0.0.1', port=8080):
         self.address = address
         self.port = port
-        print 'estabelecendo conexão com ' + self.address + ' na porta ' + self.port
+        print 'estabelecendo conexão com ' + self.address + ' na porta ' + str(self.port)
 
         self.conn = HelperClient(server=(address, port))
         response = self.conn.post(self.__path, "testando conexão!")
@@ -87,8 +87,7 @@ class Client():
         sentPkgTimestamp = time.time()
         try:
             print TAB_1 + "Enviando pacote ..."
-            response = self.conn.post(
-                self.__path, , timeout=5)
+            response = self.conn.post(self.__path, dados, timeout=5)
             responseTimestamp = time.time()
             self.delayPkgs.append((sentPkgTimestamp, responseTimestamp))
             print TAB_1 + "Pacote enviado: " + str(response)
