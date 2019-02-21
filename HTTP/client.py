@@ -27,20 +27,6 @@ class Client():
         print("\n!! Timeout nível de aplicação !!")
         raise Exception("timeout-aplicação")
 
-    def sendTestPackage(self):
-        print("\nenviando pacote de testes")
-        # print("Timestamp:" + str(time.time()))
-        headers = {
-            'Content-type': 'application/json',
-        }
-
-        packageContent = self._dados.getRandom()
-
-        self.conn.request("POST", "/markdown", packageContent, headers)
-
-        response = self.conn.getresponse()
-        print(response.status, response.reason)
-
     def establishConnection(self, address='localhost', port=8080):
         self.address = address
         self.port = port
@@ -75,9 +61,6 @@ class Client():
 				intervalo de tempo entre repetição, em segundos. 
 				Padrão = 1seg
 		"""
-
-        # self.sendTestPackage()
-
         print("\nIniciando o experimento às {0}".format(
             util.getFormattedDatetimeWithMillisec()))
 

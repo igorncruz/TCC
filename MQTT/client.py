@@ -24,31 +24,33 @@ import util
 # mqttc.publish('tcc', 'Hello, World!')
 # mqttc.loop(2) #timeout = 2s
 
-
-
-
-
 TAB_1 = '\t - '
 
 
 class Client():
     _dados = Data()
     mqttc = mqtt.Client('python_pub')
-    startExperimentTS = ''
-    __path = "basic"
+    lostPkgs = []
+    delayPkgs = []
+    address = ""
+    port = ""
+    TIMEOUT = 10
+    MAX_SEND_ATTEMPT_NUMBER = 3
+
+    def timeout_handler(self, num, stack):
+        print("\n!! Timeout nível de aplicação !!")
+        raise Exception("timeout-aplicação")
 
     def establishConnection(self, address='localhost', port=1883):
+        self.address = address
+        self.port = port
+        print('\nEstabelecendo conexão com ' + address + '...')
         dataTest = 'Hello World!'
-        print('endereco: ' + address)
-        print('porta: ' + str(port))
-        print('dados: ' + dataTest)
-
         self.mqttc.connect(address, port)
         response = self.mqttc.publish('tcc', dataTest)
-        print('enviado: '+ str(response.is_published()))
+        print('enviado: ' + str(response.is_published()))
 
-
-    def startExperiment(self, reps=-1, timePerRep=1):
+    def startExperiment(self, reps=-1, fileName="teste", timePerRep=1):
         """
 		Inicia o Experimento
 		>>Reps: quantidade de repetições que o experimento terá. 
@@ -74,19 +76,40 @@ class Client():
                 i + 1, str(util.getFormattedDatetimeWithMillisec())))
             self.sendPackage(i)
             time.sleep(timePerRep)
+        self.generateDelayAndLostFiles(fileName)
+
+    def generateDelayAndLostFiles(self, fileName):
+        if (len(self.delayPkgs) > 0):
+            fileDelay = open(fileName + "-delay.txt", 'w')
+            for i in self.delayPkgs:
+                fileDelay.write("{},{},{}\n".format(i[0], i[1], i[2]))
+
+        if len(self.lostPkgs) > 0:
+            fileLost = open(fileName + "-perda.txt", 'w')
+            for i in self.lostPkgs:
+                fileLost.write("{}\n".format(i))
 
     def sendPackage(self, index):
+        print(TAB_1 + "Obtendo os dados p/ envio ...")
+        dados = self._dados.getByIndex(index)
         print(TAB_1 + "Enviando pacote ...")
-        #pegar timestamp: ida
-        response = self.mqttc.publish('tcc', self._dados.getByIndex(index))
-        #pegar timestamp: volta
-        print(TAB_1 + 'enviado: ' + str(response.is_published()))
+        sentPkgTimestamp = time.time()
+        try:
+            id = index + 1
+            response = self.mqttc.publish('tcc', dados)
+            print("{}Pacote id {} enviado: {}".format(TAB_1, id,
+                                                      response.is_published()))
+            responseTimestamp = time.time()
+            self.delayPkgs.append((id, sentPkgTimestamp, responseTimestamp))
+        except Exception as ex:
+            self.lostPkgs.append(sentPkgTimestamp)
+            print("!! Pacote dropado !! - Erro: {}!".format(str(ex)))
 
-        while(not response.is_published()):
-            print(TAB_1 + "enviando novamente...")
-            self.mqttc.connect(address, port)
-            response = self.mqttc.publish('tcc', self._dados.getByIndex(index))
-            print(TAB_1 + 'enviado: ' + str(response.is_published()))
+        # while (not response.is_published()):
+        #     print(TAB_1 + "enviando novamente...")
+        #     self.mqttc.connect(address, port)
+        #     response = self.mqttc.publish('tcc', self._dados.getByIndex(index))
+        #     print(TAB_1 + 'enviado: ' + str(response.is_published()))
         # print TAB_1 + "Pacote enviado: {}  {}".format(response.status, response.reason))
 
 
@@ -99,7 +122,9 @@ def main():
         client.establishConnection()
     else:
         client.establishConnection(address=address)
-
+    fileName = input(
+        '\nDigite o nome do arquivo (sem a extensão) em que serão registrados a perda de pacotes e delay a nível de aplicação\n'
+    )
     reps = input(
         '\nDigite a quantidade de pacotes que você deseja enviar: (ou deixe em branco para enviar a quantidade máxima possível )\n'
     )
@@ -108,7 +133,7 @@ def main():
     except ValueError:
         reps = -1
 
-    client.startExperiment(reps)
+    client.startExperiment(reps, fileName)
 
 
 if __name__ == '__main__':
