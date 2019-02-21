@@ -8,7 +8,7 @@
 # By default, the mosquitto broker is initialize on 1883 port
 
 import paho.mqtt.client as mqtt
-import sys, time, datetime
+import sys, time, datetime, signal
 from pathlib import Path
 # Se o cliente for executado no windows, descomentar a linha abaixo
 # sys.path.insert(0, str(Path().resolve()))
@@ -92,18 +92,29 @@ class Client():
     def sendPackage(self, index):
         print(TAB_1 + "Obtendo os dados p/ envio ...")
         dados = self._dados.getByIndex(index)
-        print(TAB_1 + "Enviando pacote ...")
-        sentPkgTimestamp = time.time()
-        try:
-            id = index + 1
-            response = self.mqttc.publish('tcc', dados)
-            print("{}Pacote id {} enviado: {}".format(TAB_1, id,
-                                                      response.is_published()))
-            responseTimestamp = time.time()
-            self.delayPkgs.append((id, sentPkgTimestamp, responseTimestamp))
-        except Exception as ex:
-            self.lostPkgs.append(sentPkgTimestamp)
-            print("!! Pacote dropado !! - Erro: {}!".format(str(ex)))
+        sentPkgCount = 0
+        while sentPkgCount < self.MAX_SEND_ATTEMPT_NUMBER:
+            sentPkgTimestamp = time.time()
+            signal.signal(signal.SIGALRM, self.timeout_handler)
+            signal.alarm(self.TIMEOUT)
+            try:
+                id = "{}.{}".format(str(index + 1), str(sentPkgCount))
+                print(TAB_1 + "Enviando pacote ...")
+                response = self.mqttc.publish('tcc', dados, 2)
+                response.wait_for_publish()
+                print("{}Pacote id {} enviado: {}".format(
+                    TAB_1, id, response.is_published()))
+                responseTimestamp = time.time()
+                self.delayPkgs.append((id, sentPkgTimestamp,
+                                       responseTimestamp))
+                sentPkgCount = self.MAX_SEND_ATTEMPT_NUMBER
+            except Exception as ex:
+                self.lostPkgs.append(sentPkgTimestamp)
+                print("!! Pacote dropado !! - Erro: {}!".format(str(ex)))
+                sentPkgCount += 1
+            finally:
+                signal.alarm(0)
+
 
         # while (not response.is_published()):
         #     print(TAB_1 + "enviando novamente...")
