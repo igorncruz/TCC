@@ -115,7 +115,6 @@ class Client():
             finally:
                 signal.alarm(0)
 
-
         # while (not response.is_published()):
         #     print(TAB_1 + "enviando novamente...")
         #     self.mqttc.connect(address, port)
