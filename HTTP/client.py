@@ -47,7 +47,6 @@ class Client():
             print(ex)
             self.reestablishConnection()
 
-
     #reps:
 
     #timePerRep:
@@ -101,7 +100,7 @@ class Client():
             signal.alarm(self.TIMEOUT)
             try:
                 #id = uuid.uuid4().time_mid
-                id = "{}.{}".format(str(index+1), str(sentPkgCount))
+                id = "{}.{}".format(str(index + 1), str(sentPkgCount))
                 headers = {
                     'Content-type': 'application/json',
                     'X-Timestamp': str(sentPkgTimestamp),
@@ -117,13 +116,13 @@ class Client():
                 responseTimestamp = time.time()
                 self.delayPkgs.append((id, sentPkgTimestamp,
                                        responseTimestamp))
-                sentPkgCount=self.MAX_SEND_ATTEMPT_NUMBER
-                
+                sentPkgCount = self.MAX_SEND_ATTEMPT_NUMBER
+
             except Exception as e:
                 self.lostPkgs.append(sentPkgTimestamp)
                 print("!! Pacote dropado !! - Erro: {}!".format(str(e)))
                 self.reestablishConnection()
-                sentPkgCount+=1
+                sentPkgCount += 1
             finally:
                 signal.alarm(0)
 
