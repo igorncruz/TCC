@@ -20,6 +20,8 @@ TAB_1 = '\t - '
 class MQTTClient():
     _dados = Data()
     client = Nyamuk("tcc_client")
+    lostPkgs = []
+    delayPkgs = []
     TIMEOUT = 10
     MAX_SEND_ATTEMPT_NUMBER = 3
 
@@ -56,7 +58,7 @@ class MQTTClient():
                 i + 1, str(util.getFormattedDatetimeWithMillisec()))
             self.sendPackage(i)
             time.sleep(timePerRep)
-        # self.generateDelayAndLostFiles(fileName)
+        self.generateDelayAndLostFiles(fileName)
 
         print "Número de repetições: " + str(reps)
         print "Nome do arquivo: " + fileName
@@ -74,7 +76,7 @@ class MQTTClient():
                 #id = uuid.uuid4().time_mid
                 id = "{}.{}".format(str(index + 1), str(sentPkgCount))
                 sentPkgTimestamp = time.time()
-                print TAB_1 + "Enviando pacote..."
+                print TAB_1 + "Enviando pacote {} ...".format(id)
 
                 self.client.publish('tcc', dados, qos=1)
                 self.client.packet_write()
@@ -82,17 +84,28 @@ class MQTTClient():
                 #     id, response.status, response.reason)
                 responseTimestamp = time.time()
                 # print str(response)
-                # self.delayPkgs.append((id, sentPkgTimestamp,
-                #                        responseTimestamp))
+                self.delayPkgs.append((id, sentPkgTimestamp,
+                                       responseTimestamp))
                 sentPkgCount = self.MAX_SEND_ATTEMPT_NUMBER
 
             except Exception as e:
-                # self.lostPkgs.append(sentPkgTimestamp)
+                self.lostPkgs.append(sentPkgTimestamp)
                 print("!! Pacote dropado !! - Erro: {}!".format(str(e)))
-                # self.reestablishConnection()
+                self.reconnect()
                 sentPkgCount += 1
             finally:
                 signal.alarm(0)
+
+    def generateDelayAndLostFiles(self, fileName):
+        if (len(self.delayPkgs) > 0):
+            fileDelay = open(fileName + "-delay.txt", 'w')
+            for i in self.delayPkgs:
+                fileDelay.write("{},{},{}\n".format(i[0], i[1], i[2]))
+
+        if len(self.lostPkgs) > 0:
+            fileLost = open(fileName + "-perda.txt", 'w')
+            for i in self.lostPkgs:
+                fileLost.write("{}\n".format(i))
 
 
 def main():
