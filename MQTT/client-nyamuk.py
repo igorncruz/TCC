@@ -80,6 +80,11 @@ class MQTTClient():
 
                 self.client.publish('tcc', dados, qos=1)
                 self.client.packet_write()
+                self.client.loop()
+                ret = self.client.pop_event()
+                print str(ret)
+                if not isinstance(ret, EventConnack) or ret.ret_code != 0:
+                    print 'connection failed'
                 # print TAB_1 + "Pacote id {} enviado: {}  {}".format(
                 #     id, response.status, response.reason)
                 responseTimestamp = time.time()
