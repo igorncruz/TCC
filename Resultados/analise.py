@@ -47,8 +47,8 @@ class PackagePair():
         self.received = received
 
     def findReceivedPair(self, packageReceivedList):
-        tsUpperLimit = util.addSecs(self.sent.timestamp, 15).timestamp()
-        tsLowerLimit = util.addSecs(self.sent.timestamp, -15).timestamp()
+        tsUpperLimit = util.addSecs(self.sent.timestamp, 30).timestamp()
+        tsLowerLimit = util.addSecs(self.sent.timestamp, -30).timestamp()
 
         for receivedPkg in packageReceivedList:
             if receivedPkg.timestamp > tsUpperLimit:
@@ -110,7 +110,7 @@ class Repetition():
             #     break
             # print("{} - Buscando o par do pacote {}".format(util.nowStr(), minIndex + i))
             pkgPair = PackagePair(pkg)
-            if pkgPair.findReceivedPair(listPackagesServer[minIndex:maxIndex]):
+            if pkgPair.findReceivedPair(listPackagesServer):
                 list.append(pkgPair)
             else:
                 self.pkgLost += 1
@@ -242,9 +242,9 @@ class Analyze():
 
 def main():
     analise = Analyze(
-        'mqtt/server/mqtt_factor_l1_v1_p1_without_thread_server__2019-01-16.pcap',
-        'mqtt/client/mqtt_factor_l1_v1_p1_without_thread_client__2019-01-16.pcap',
-        'mqtt/mqtt_factor_l1_v1_p1_result__2019-01-16.txt')
+        'http/client/http_factor_l3_p3_v2_client__2019_02_17.pcap',
+        'http/server/http_factor_l3_p3_v2_server__2019_02_17.pcap',
+        'http/http_factor_l3_p3_v2_result')
     analise.generateFile()
 
 if __name__ == '__main__':
