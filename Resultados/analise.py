@@ -244,7 +244,7 @@ def main():
     analise = Analyze(
         'http/client/http_factor_l3_p3_v2_client__2019_02_17.pcap',
         'http/server/http_factor_l3_p3_v2_server__2019_02_17.pcap',
-        'http/http_factor_l3_p3_v2_result')
+        'http/analise/http_factor_l3_p3_v2_result')
     analise.generateFile()
 
 if __name__ == '__main__':
