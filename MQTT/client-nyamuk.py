@@ -54,7 +54,7 @@ class MQTTClient():
             str(datetime.timedelta(seconds=duracao)))
 
         for i in range(0, reps):
-            print "iniciando repetição {} às {}".format(
+            print "\niniciando repetição {} às {}".format(
                 i + 1, str(util.getFormattedDatetimeWithMillisec()))
             self.sendPackage(i)
             time.sleep(timePerRep)
@@ -70,9 +70,9 @@ class MQTTClient():
         self.reconnect()
         while sentPkgCount < self.MAX_SEND_ATTEMPT_NUMBER:
             sentPkgTimestamp = time.time()
-            signal.signal(signal.SIGALRM, self.timeout_handler)
-            signal.alarm(self.TIMEOUT)
             try:
+                #signal.signal(signal.SIGALRM, self.timeout_handler)
+                #signal.alarm(self.TIMEOUT)
                 #id = uuid.uuid4().time_mid
                 id = "{}.{}".format(str(index + 1), str(sentPkgCount))
                 sentPkgTimestamp = time.time()
@@ -82,9 +82,9 @@ class MQTTClient():
                 self.client.packet_write()
                 self.client.loop()
                 ret = self.client.pop_event()
-                print str(ret.ret_code)
                 if not isinstance(ret, EventConnack) or ret.ret_code != 0:
                     print 'connection failed'
+                    raise Exception("connection failed")
                 # print TAB_1 + "Pacote id {} enviado: {}  {}".format(
                 #     id, response.status, response.reason)
                 responseTimestamp = time.time()
@@ -98,8 +98,8 @@ class MQTTClient():
                 print("!! Pacote dropado !! - Erro: {}!".format(str(e)))
                 self.reconnect()
                 sentPkgCount += 1
-            finally:
-                signal.alarm(0)
+            #finally:
+                #signal.alarm(0)
 
     def generateDelayAndLostFiles(self, fileName):
         if (len(self.delayPkgs) > 0):
@@ -131,7 +131,7 @@ def main():
     # if (len(fileName) <= 0):
     #     fileName = "teste"
 
-    reps = input(
+    reps = raw_input(
         '\nQual é a quantidade de pacotes que você deseja enviar: (deixe em branco para enviar a quantidade máxima possível )\n'
     )
 
