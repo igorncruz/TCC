@@ -242,9 +242,9 @@ class Analyze():
 
 def main():
     analise = Analyze(
-        'http/client/http_factor_l3_p3_v2_client__2019_02_17.pcap',
-        'http/server/http_factor_l3_p3_v2_server__2019_02_17.pcap',
-        'http/analise/http_factor_l3_p3_v2_result')
+        'coap/client/coap_factor_l3_p3_v3_client__2019_02_19.pcap',
+        'coap/server/coap_factor_l3_p3_v3_server__2019_02_19.pcap',
+        'coap/analise/coap_factor_l3_p3_v3_result')
     analise.generateFile()
 
 if __name__ == '__main__':

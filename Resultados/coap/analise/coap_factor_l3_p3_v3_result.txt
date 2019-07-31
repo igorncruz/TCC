@@ -1,0 +1,392 @@
+Início no servidor às: 2019-02-19 08:37:52.582: 62715 | 59 | 31 | b'B\x02\x15wMd\xb5basic\xfftestando conex\xc3\xa3o!'
+Fim no servidor às: 2019-02-19 11:17:37.245: 20357 | 512 | 484 | b'B\x029GiE\xb5basic\xff{"values": {"hora": "00", "radiacao": "-3.40", "vento_rajada": "4.2", "temp_max": "20.8", "umid_max": "85", "umid_min": "79", "data": "24/04/2017", "pressao": "888.3", "pressao_min": "888.1", "vento_direcao": "1.2", "pto_orvalho_inst": "17.1", "pto_orvalho_max": "17.8", "vento_vel": "279", "temp_min": "20.5", "pressao_max": "888.3", "codigo_estacao": "A001", "pto_orvalho_min": "17.0", "temp_inst": "20.8", "umid_inst": "79", "precipitacao": "0.0"}, "ts": 1492992000}\r\n'
+Quantidade total de pacotes no servidor: 9169
+Início no cliente às: 2019-02-19 08:37:52.591: 62715 | 59 | 31 | b'B\x02\x15wMd\xb5basic\xfftestando conex\xc3\xa3o!'
+Fim no cliente às: 2019-02-19 11:17:37.254: 20357 | 512 | 484 | b'B\x029GiE\xb5basic\xff{"values": {"hora": "00", "radiacao": "-3.40", "vento_rajada": "4.2", "temp_max": "20.8", "umid_max": "85", "umid_min": "79", "data": "24/04/2017", "pressao": "888.3", "pressao_min": "888.1", "vento_direcao": "1.2", "pto_orvalho_inst": "17.1", "pto_orvalho_max": "17.8", "vento_vel": "279", "temp_min": "20.5", "pressao_max": "888.3", "codigo_estacao": "A001", "pto_orvalho_min": "17.0", "temp_inst": "20.8", "umid_inst": "79", "precipitacao": "0.0"}, "ts": 1492992000}\r\n'
+Quantidade total de pacotes no cliente: 9169
+Quantidade total de repetições: 32
+
+
+Repetição 1
+Início às: 2019-02-19 08:37:52.591
+Fim às: 2019-02-19 08:42:52.591
+Quantidade total de pacotes: 258
+Atraso médio dos pacotes: -0.008978509163671686
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 437.32666666666665
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 413.24666666666667
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.86
+Quantidade de pacotes perdidos: 0
+
+Repetição 2
+Início às: 2019-02-19 08:42:52.591
+Fim às: 2019-02-19 08:47:52.591
+Quantidade total de pacotes: 289
+Atraso médio dos pacotes: -0.009088576458729675
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 491.99333333333334
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 465.02
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9633333333333334
+Quantidade de pacotes perdidos: 0
+
+Repetição 3
+Início às: 2019-02-19 08:47:52.591
+Fim às: 2019-02-19 08:52:52.591
+Quantidade total de pacotes: 289
+Atraso médio dos pacotes: -0.009154760301319374
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 492.62666666666667
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 465.6533333333333
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9633333333333334
+Quantidade de pacotes perdidos: 0
+
+Repetição 4
+Início às: 2019-02-19 08:52:52.591
+Fim às: 2019-02-19 08:57:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.008970211777422164
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.35
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.47
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 5
+Início às: 2019-02-19 08:57:52.591
+Fim às: 2019-02-19 09:02:52.591
+Quantidade total de pacotes: 289
+Atraso médio dos pacotes: -0.009116303137016956
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 492.3333333333333
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 465.36
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9633333333333334
+Quantidade de pacotes perdidos: 0
+
+Repetição 6
+Início às: 2019-02-19 09:02:52.591
+Fim às: 2019-02-19 09:07:52.591
+Quantidade total de pacotes: 289
+Atraso médio dos pacotes: -0.00926567773917967
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 492.06666666666666
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 465.0933333333333
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9633333333333334
+Quantidade de pacotes perdidos: 0
+
+Repetição 7
+Início às: 2019-02-19 09:07:52.591
+Fim às: 2019-02-19 09:12:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.009356607993443808
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.8433333333333
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.9633333333333
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 8
+Início às: 2019-02-19 09:12:52.591
+Fim às: 2019-02-19 09:17:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.008995343413617875
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.00333333333333
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.12333333333333
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 9
+Início às: 2019-02-19 09:17:52.591
+Fim às: 2019-02-19 09:22:52.591
+Quantidade total de pacotes: 289
+Atraso médio dos pacotes: -0.009337157114154327
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 492.55333333333334
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 465.58
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9633333333333334
+Quantidade de pacotes perdidos: 0
+
+Repetição 10
+Início às: 2019-02-19 09:22:52.591
+Fim às: 2019-02-19 09:27:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.00910419225692749
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.99
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 464.11
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 11
+Início às: 2019-02-19 09:27:52.591
+Fim às: 2019-02-19 09:32:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.00901467353105545
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 489.49
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 462.61
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 12
+Início às: 2019-02-19 09:32:52.591
+Fim às: 2019-02-19 09:37:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.009192579322391085
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.47333333333336
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.5933333333333
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 13
+Início às: 2019-02-19 09:37:52.591
+Fim às: 2019-02-19 09:42:52.591
+Quantidade total de pacotes: 289
+Atraso médio dos pacotes: -0.008945431263801549
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 491.3233333333333
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 464.35
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9633333333333334
+Quantidade de pacotes perdidos: 0
+
+Repetição 14
+Início às: 2019-02-19 09:42:52.591
+Fim às: 2019-02-19 09:47:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.009178477856847975
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.1
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.22
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 15
+Início às: 2019-02-19 09:47:52.591
+Fim às: 2019-02-19 09:52:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.009118204315503439
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.41
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.53
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 16
+Início às: 2019-02-19 09:52:52.591
+Fim às: 2019-02-19 09:57:52.591
+Quantidade total de pacotes: 287
+Atraso médio dos pacotes: -0.00900864351917227
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 489.1933333333333
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 462.4066666666667
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9566666666666667
+Quantidade de pacotes perdidos: 0
+
+Repetição 17
+Início às: 2019-02-19 09:57:52.591
+Fim às: 2019-02-19 10:02:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.009199519952138266
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.4166666666667
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.5366666666667
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 18
+Início às: 2019-02-19 10:02:52.591
+Fim às: 2019-02-19 10:07:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.009293386505709754
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.1166666666667
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.2366666666667
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 19
+Início às: 2019-02-19 10:07:52.591
+Fim às: 2019-02-19 10:12:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.00937271366516749
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 489.89666666666665
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.01666666666665
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 20
+Início às: 2019-02-19 10:12:52.591
+Fim às: 2019-02-19 10:17:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.009217566086186303
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.52
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.64
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 21
+Início às: 2019-02-19 10:17:52.591
+Fim às: 2019-02-19 10:22:52.591
+Quantidade total de pacotes: 287
+Atraso médio dos pacotes: -0.009174861143690368
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 488.5733333333333
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 461.7866666666667
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9566666666666667
+Quantidade de pacotes perdidos: 0
+
+Repetição 22
+Início às: 2019-02-19 10:22:52.591
+Fim às: 2019-02-19 10:27:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.008848049574428134
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.85
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.97
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 23
+Início às: 2019-02-19 10:27:52.591
+Fim às: 2019-02-19 10:32:52.591
+Quantidade total de pacotes: 287
+Atraso médio dos pacotes: -0.009193584894054028
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 488.44666666666666
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 461.66
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9566666666666667
+Quantidade de pacotes perdidos: 0
+
+Repetição 24
+Início às: 2019-02-19 10:32:52.591
+Fim às: 2019-02-19 10:37:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.009168523881170485
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 489.93
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.05
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 25
+Início às: 2019-02-19 10:37:52.591
+Fim às: 2019-02-19 10:42:52.591
+Quantidade total de pacotes: 287
+Atraso médio dos pacotes: -0.009115802286393967
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 488.25333333333333
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 461.46666666666664
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9566666666666667
+Quantidade de pacotes perdidos: 0
+
+Repetição 26
+Início às: 2019-02-19 10:42:52.591
+Fim às: 2019-02-19 10:47:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.009239367312855191
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 489.93
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.05
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 27
+Início às: 2019-02-19 10:47:52.591
+Fim às: 2019-02-19 10:52:52.591
+Quantidade total de pacotes: 287
+Atraso médio dos pacotes: -0.009159438701456848
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 488.83666666666664
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 462.05
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9566666666666667
+Quantidade de pacotes perdidos: 0
+
+Repetição 28
+Início às: 2019-02-19 10:52:52.591
+Fim às: 2019-02-19 10:57:52.591
+Quantidade total de pacotes: 287
+Atraso médio dos pacotes: -0.00863890697731789
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 488.50333333333333
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 461.71666666666664
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9566666666666667
+Quantidade de pacotes perdidos: 0
+
+Repetição 29
+Início às: 2019-02-19 10:57:52.591
+Fim às: 2019-02-19 11:02:52.591
+Quantidade total de pacotes: 288
+Atraso médio dos pacotes: -0.009050740136040581
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 490.26
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 463.38
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.96
+Quantidade de pacotes perdidos: 0
+
+Repetição 30
+Início às: 2019-02-19 11:02:52.591
+Fim às: 2019-02-19 11:07:52.591
+Quantidade total de pacotes: 287
+Atraso médio dos pacotes: -0.009007146549557143
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 488.89666666666665
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 462.11
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9566666666666667
+Quantidade de pacotes perdidos: 0
+
+Repetição 31
+Início às: 2019-02-19 11:07:52.591
+Fim às: 2019-02-19 11:12:52.591
+Quantidade total de pacotes: 287
+Atraso médio dos pacotes: -0.008988692785389331
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 488.4066666666667
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 461.62
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9566666666666667
+Quantidade de pacotes perdidos: 0
+
+Repetição 32
+Início às: 2019-02-19 11:12:52.591
+Fim às: 2019-02-19 11:17:52.591
+Quantidade total de pacotes: 272
+Atraso médio dos pacotes: -0.009230142130571254
+Taxa média de pacotes (média(tamanho pkt/atraso pkt)): 0.0
+Taxa média de pacotes por seg (sum(tamanho pkt)/300): 462.71666666666664
+Taxa média de payload dos pacotes por seg (sum(tamanho payload)/300): 437.33
+Taxa média de payload dos pacotes (média(tamanho payload/atraso pkt)): 0.0
+Taxa de pacotes por segund (total pkt/300)): 0.9066666666666666
+Quantidade de pacotes perdidos: 0
