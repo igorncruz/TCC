@@ -11,7 +11,6 @@ import util
 
 TAB_1 = '\t - '
 
-
 class Client():
     _dados = Data()
     conn = ''
@@ -31,7 +30,8 @@ class Client():
         self.address = address
         self.port = port
         print('\nEstabelecendo conexão com ' + address + '...')
-        self.conn = http.client.HTTPConnection(self.address, self.port)
+        self.conn = http.client.HTTPConnection(self.address,
+            self.port)
         self.conn.request("HEAD", "/")
         res = self.conn.getresponse()
         if res.status == 200:
