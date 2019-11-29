@@ -13,18 +13,17 @@ def main():
             for perda in perdas.keys():
                 nomeArquivo = '{}_factor_{}_{}_v3_result.csv'.format(
                     protocolo, latencia, perda)
-                caminhoArquivo = "Resultados/{}/analise/{}".format(
-                    protocolo, nomeArquivo)
+                caminhoArquivo = "{}/analise/{}".format(protocolo, nomeArquivo)
                 file = open(caminhoArquivo, 'r')
                 linhas = file.readlines()
                 for index in range(2, repeticoesConsiderar):
-                    taxa = linhas[index].split(',')[3]
+                    taxa = linhas[index].split(',')[6]
                     resumoValue = "{},{},{},{}".format(
                         taxa, latencias.get(latencia), perdas.get(perda),
                         protocolos.get(protocolo))
                     print(resumoValue)
                     resumo.append(resumoValue)
-    resumoFileName = "./Resultados/resumo-analises.csv"
+    resumoFileName = "./resumo-analises.csv"
     try:
         os.remove(resumoFileName)
     except OSError:

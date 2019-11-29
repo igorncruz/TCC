@@ -1,4 +1,4 @@
-dados <- read.csv('./Projetos/TCC/Resultados/resumo-analises.csv', sep = ",") # Open file
+dados <- read.csv('./Projetos/TCC/Resultados/resumo-analises - TAX_MED_LEN_PKG_POR_SEG.csv', sep = ",") # Open file
 #dados <- dados[-1] # remove the "Run" column
 
 View(dados)
@@ -10,9 +10,10 @@ dados$Proto = factor(dados$Proto)
 
 #plot(dados)
 
-interaction.plot(dados$Perd,dados$Lat,dados$Taxa)
-interaction.plot(dados$Perd,dados$Proto,dados$Taxa)
-interaction.plot(dados$Lat,dados$Proto,dados$Taxa)
+interaction.plot(dados$Perd,dados$Lat,dados$Taxa,xlab = "Perda de pacotes definida (em %)", ylab = "Taxa", trace.label = "Protocolo", main="Taxa em função da perda de pacotes")
+interaction.plot(dados$Lat,dados$Perd,dados$Taxa,xlab = "Latência definida (em ms)", ylab = "Taxa", trace.label = "Perda de \npacotes (em %)", main="Taxa em função da perda de pacotes")
+interaction.plot(dados$Perd,dados$Proto,dados$Taxa,xlab = "Perda de pacotes (em %)", ylab = "Taxa", trace.label = "Protocolo", main="Taxa em função da perda de pacotes")
+interaction.plot(dados$Lat,dados$Proto,dados$Taxa,xlab = "Latência definida (em ms)", ylab = "Taxa", trace.label = "Protocolo", main="Taxa em função da latência")
 boxplot(dados$Taxa~dados$Lat)
 boxplot(dados$Taxa~dados$Perd)
 boxplot(dados$Taxa~dados$Proto)
