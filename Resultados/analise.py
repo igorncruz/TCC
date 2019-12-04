@@ -134,7 +134,7 @@ class Repetition():
             sumPayloadLenDelay += (
                 pkg.received.lenPayload / pkg.delay) if pkg.delay > 0 else 0
         self.averageDelay = sumDelay / len(self.listPackages)
-        self.averagePkgLen = sumPkgLen / SECONDS_FOR_EACH_REP
+        self.averagePkgLen = sumPkgLen / SECONDS_FOR_EACH_REP # Taxa escolhida
         self.averagePkgLenDelay = sumPkgLenDelay / len(self.listPackages)
         self.averagePayloadLen = sumPayloadLen / SECONDS_FOR_EACH_REP
         self.averagePayloadLenDelay = sumPayloadLenDelay / len(self.listPackages)

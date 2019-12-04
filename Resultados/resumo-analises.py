@@ -6,7 +6,7 @@ def main():
     latencias = {'l1': 400, 'l2': 100, 'l3': 10}
     perdas = {'p1': 25, 'p2': 15, 'p3': 0}
     resumo = []
-    repeticoesConsiderar = 30
+    repeticoesConsiderar = 31
 
     for protocolo in protocolos.keys():
         for latencia in latencias.keys():
@@ -16,8 +16,8 @@ def main():
                 caminhoArquivo = "{}/analise/{}".format(protocolo, nomeArquivo)
                 file = open(caminhoArquivo, 'r')
                 linhas = file.readlines()
-                for index in range(2, repeticoesConsiderar):
-                    taxa = linhas[index].split(',')[6]
+                for index in range(1, repeticoesConsiderar):
+                    taxa = linhas[index].split(',')[3]
                     resumoValue = "{},{},{},{}".format(
                         taxa, latencias.get(latencia), perdas.get(perda),
                         protocolos.get(protocolo))
