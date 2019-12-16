@@ -9,9 +9,9 @@ dados$Perd = factor(dados$Perd)
 dados$Proto = factor(dados$Proto)
 
 #plot(dados)
-boxplot(dados$Taxa~dados$Proto, xlab="Protocolo", ylab="Taxa (B/s)", main="Distribuição da taxa de dados recebidos por protocolo")
-boxplot(dados$Taxa~dados$Perd, xlab="Perda de pacotes (em %)", ylab="Taxa (B/s)", main="Distribuição da taxa de dados recebidos por nível de perda de pacotes")
-boxplot(dados$Taxa~dados$Lat, xlab="Latência (em ms)", ylab="Taxa (B/s)", main="Distribuição da taxa de dados recebidos por nível de latência")
+boxplot(dados$Taxa~dados$Proto, xlab="Protocolo", ylab="Taxa de dados recebidos (em B/s)", main="Diagrama de caixas da taxa de dados recebidos\n por protocolo")
+boxplot(dados$Taxa~dados$Perd, xlab="Perda de pacotes (em %)", ylab="Taxa de dados recebidos (em B/s)", main="Diagrama de caixas da taxa de dados recebidos\n por nível de perda de pacotes")
+boxplot(dados$Taxa~dados$Lat, xlab="Latência (em ms)", ylab="Taxa de dados recebidos (em B/s)", main="Diagrama de caixas da taxa de dados recebidos\n por nível de latência")
 
 interaction.plot(dados$Perd,dados$Lat,dados$Taxa,xlab = "Perda de pacotes definida (em %)", ylab = "Taxa (B/s)", trace.label = "Latência \n(em ms)", main="Interação entre perda de pacotes e latência")
 interaction.plot(dados$Perd,dados$Proto,dados$Taxa,xlab = "Perda de pacotes (em %)", ylab = "Taxa (B/s)", trace.label = "Protocolo", main="Interação entre protocolo e perda de pacotes")
