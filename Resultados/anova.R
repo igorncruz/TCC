@@ -3,6 +3,9 @@ dados <- read.csv('./Projetos/TCC/Resultados/resumo-analises.csv', sep = ",") # 
 
 #View(dados)
 
+anovaLat = dados[, -c(3,4)]
+anovaPerd = dados[, -c(2,4)]
+anovaProto = dados[, -c(2,3)]
 
 dados$Lat = factor(dados$Lat)
 dados$Perd = factor(dados$Perd)
@@ -18,10 +21,19 @@ interaction.plot(dados$Perd,dados$Proto,dados$Taxa,xlab = "Perda de pacotes (em 
 interaction.plot(dados$Lat,dados$Proto,dados$Taxa,xlab = "Latência definida (em ms)", ylab = "Taxa (B/s)", trace.label = "Protocolo", main="Interação entre protocolo e latência")
 
 # ANOVA
+aovLat = aov(Taxa~Lat, data=anovaLat)
+summary(aovLat)
+
+aovPerd = aov(Taxa~Perd, data=anovaPerd)
+summary(aovPerd)
+
+aovProto = aov(Taxa~Proto, data=anovaProto)
+summary(aovProto)
+
 aov1.out = aov(Taxa ~ ., data=dados) #Model considering only the variables with no interactions
 summary(aov1.out)
 aov1.out
-
+TukeyHSD(aov1.out)
 
 aov2.out = aov(Taxa ~ .^2, data=dados) #Model considering only the variables with no interactions
 summary(aov2.out)
